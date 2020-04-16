@@ -12,7 +12,7 @@ all: \
 build/:
 	mkdir -p build
 
-build/graphdata.jsonnet:
+build/graphdata.jsonnet: insights.py build/rki.csv build/hopkins.csv build/population.csv
 	python3 scripts/graphdata_jsonnet.py
 
 build/bootstrap.min.css:
@@ -30,7 +30,7 @@ build/rki.csv:
 build/population.csv:
 	python3 scripts/population_csv.py
 
-docs/index.html: index.html.jinja2 build/graphdata.jsonnet
+docs/index.html: index.html.jinja2 build/graphdata.jsonnet graphs.jsonnet build/Chart.min.js build/bootstrap.min.css
 	python3 scripts/index_html.py
 
 .PHONY: clean
