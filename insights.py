@@ -20,11 +20,8 @@ hopkins = pd.read_csv("build/hopkins.csv", index_col="country")
 
 @export
 def gender():
-    return df.groupby("gender").sum()["deaths"].to_dict()
+    return df.groupby("gender").sum()["deaths"].rename().to_dict()
 
-@export
-def gender_infections():
-    return df.groupby("gender").sum()["infections"].to_dict()
 
 @export
 def deaths():
