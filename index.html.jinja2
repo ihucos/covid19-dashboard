@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <style>
+      {{ bootstrap_css }}
+    </style>
+
+    <script>
+      {{ chart_js }}
+    </script>
+
+    <title>Covid-19 In Deutschland</title>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="row my-3">
+            <div class="col">
+                <h1>Covid-19 In Deutschland</h1>
+            </div>
+        </div>
+
+        <div class="row my-2">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <canvas id="new_cases" height="150"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row my-2">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <canvas id="states" height="50"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row my-2">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <canvas id="deaths"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <canvas id="gender"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <canvas id="deaths_by_age"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row my-2">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <canvas id="countries" height=100></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row my-4">
+            <div class="col">
+                <div class="card text-muted">
+                    <div class="card-body" style="max-width: 50rem;">
+                        <h5 class="card-title">Über dieses Projekt</h5>
+                        <p class="card-text">Der Covid-19 Dashboard wird
+                        täglich aktualisiert und ist Open Source. Ziel ist es
+                        auf einem Blick eine Situative Einschätzungen des
+                        Verlaufs von Covid-19 zu erlangen. Die Daten werden von
+                        folgenden Quellen bezogen: Robert Koch-Institut und
+                        Johns Hopkins University. Mitarbeit in der <a
+                        href="#">Github Seite</a> dieses Projekts jederzeit
+                        willkommen.  </p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        var data = {{ data }}
+        for (var id in data) {
+            if (data.hasOwnProperty(id)) {
+                new Chart(document.getElementById(id), data[id]);
+            }
+        }
+    </script>
+
+</body>
+
+</html>
