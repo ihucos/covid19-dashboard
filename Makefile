@@ -30,7 +30,7 @@ build/rki.csv:
 build/population.csv:
 	python3 scripts/population_csv.py
 
-docs/index.html:
+docs/index.html: index.html.jinja2 build/graphdata.jsonnet
 	python3 scripts/index_html.py
 
 .PHONY: clean
