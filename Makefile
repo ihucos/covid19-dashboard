@@ -7,7 +7,7 @@ all: \
 	build/rki.csv \
 	build/population.csv \
 	build/graphdata.jsonnet \
-	build/index.html
+	docs/index.html
 
 build/:
 	mkdir -p build
@@ -30,7 +30,7 @@ build/rki.csv:
 build/population.csv:
 	python3 scripts/population_csv.py
 
-build/index.html:
+docs/index.html:
 	python3 scripts/index_html.py
 
 .PHONY: clean

@@ -14,5 +14,5 @@ with open("index.html.jinja2") as file_:
 index_html = template.render(
     data=data, bootstrap_css=bootstrap_css, chart_js=chart_js
 )
-with open("build/index.html", "w") as out:
+with open("docs/index.html", "w") as out:
     out.write(index_html)
