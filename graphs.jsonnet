@@ -83,8 +83,8 @@ local legend = {"position": "top", "labels": {"usePointStyle": "true"}, "align":
       "type": "pie",
       "data": {
          "labels": [
-            "Todesfall Frau",
-            "Todesfall Mann"
+            "Frau",
+            "Mann"
          ],
          "datasets": [
             {
@@ -96,6 +96,31 @@ local legend = {"position": "top", "labels": {"usePointStyle": "true"}, "align":
                "data": [
                   data.gender.F,
                   data.gender.M
+               ]
+            }
+         ]
+      },
+      "options": {
+         "legend": legend
+      }
+   },
+   "gender_infections": {
+      "type": "pie",
+      "data": {
+         "labels": [
+            "Frau",
+            "Mann"
+         ],
+         "datasets": [
+            {
+               "backgroundColor": [
+                  color_orange,
+                  "white"
+               ],
+               "borderColor": color_red,
+               "data": [
+                  data.gender_infections.F,
+                  data.gender_infections.M
                ]
             }
          ]
