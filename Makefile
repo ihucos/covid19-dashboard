@@ -36,3 +36,9 @@ docs/index.html: index.html.jinja2 build/graphdata.jsonnet graphs.jsonnet build/
 .PHONY: clean
 clean:
 	rm -f build/*
+
+watch:
+	while true; do \
+	    make; \
+	    inotifywait --exclude '/\.' -qre close_write .; \
+	done
