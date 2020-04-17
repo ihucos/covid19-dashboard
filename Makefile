@@ -1,5 +1,5 @@
 
-all: docs/index.html
+all: build/ docs/index.html
 
 build/:
 	mkdir -p build
