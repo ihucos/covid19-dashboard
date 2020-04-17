@@ -1,0 +1,40 @@
+#!/usr/bin/env python3
+import pandas as pd
+
+df = pd.read_csv('manual-data/12411-0012.csv', encoding='iso-8859-1', delimiter=';', skiprows=5, skipfooter=4, engine="python")
+df = df.rename(columns={"Unnamed: 1": 'state'}).drop(["Unnamed: 0", "Insgesamt"], axis=1)
+df = df.melt(id_vars="state", var_name='age', value_name='population')
+
+df.age = df.age.str.extract('(\d+)')
+
+
+
+df.age = pd.to_numeric(df.age)
+
+
+def get_age_group(age):
+
+    if 0 <= age <= 4:
+        return "A00-A04"
+    
+    elif 5 <= age <= 14:
+        return "A05-A14"
+    
+    elif 15 <= age <= 34:
+        return "A15-A34"
+    
+    elif 35 <= age <= 59:
+        return "A35-A59"
+    
+    elif 60 <= age <= 79:
+        return "A60-A79"
+    
+    elif age >= 80:
+        return "A80+"
+
+    assert f"could not put age in group: {age}"
+
+df["age_group"] = df["age"].map(get_age_group)
+df = df.drop("age", axis=1)
+df = df[["state", "age_group", "population"]]
+df.to_csv("build/population.csv", index=False)
