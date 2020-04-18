@@ -6,11 +6,6 @@ local color_red = '#cb4b16';
 local color_orange = 'orange';
 local legend = { position: 'top', labels: { usePointStyle: 'true' }, align: 'end' };
 
-local Title(text) = {
-  display: true,
-  text: text,
-};
-
 {
   new_cases: {
     type: 'line',
@@ -50,7 +45,6 @@ local Title(text) = {
     },
     options: {
       legend: legend,
-      title: Title("Vom Robert Koch-Institut ermittelte Neugemeldete Fälle pro Tag"),
       scales: {
         yAxes: [
           {
@@ -81,7 +75,6 @@ local Title(text) = {
       ],
     },
     options: {
-      title: Title("Todesfall vs Gesamt Infiziert"),
       legend: legend,
     },
   },
@@ -107,7 +100,6 @@ local Title(text) = {
       ],
     },
     options: {
-      title: Title("Todessfall nach Geschlecht"),
       legend: legend,
     },
   },
@@ -135,7 +127,6 @@ local Title(text) = {
       ],
     },
     options: {
-      title: Title("Todesfall nach Altersgruppe"),
       legend: legend,
       scales: {
         xAxes: [
@@ -170,7 +161,6 @@ local Title(text) = {
       ],
     },
     options: {
-      title: Title("Todesfälle pro Bundesland"),
       legend: legend,
       scales: {
         xAxes: [
@@ -219,7 +209,6 @@ local Title(text) = {
       ],
     },
     options: {
-      title: Title("Übersicht andere Länder"),
       legend: legend,
       scales: {
         xAxes: [
@@ -259,7 +248,6 @@ local Title(text) = {
       ],
     },
     options: {
-      title: Title("Todesfall nach Altersgruppe"),
       responsive: true,
       tooltips: {
         mode: 'index',
