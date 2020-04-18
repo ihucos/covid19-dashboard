@@ -127,7 +127,7 @@ local legend = { position: 'bottom', labels: { usePointStyle: 'true' }, align: '
       ],
     },
     options: {
-      legend: legend,
+      legend: {display: false},
       scales: {
         xAxes: [
           {
@@ -138,9 +138,10 @@ local legend = { position: 'bottom', labels: { usePointStyle: 'true' }, align: '
         ],
         yAxes: [
           {
-            display: false,
-            gridLines: {
-              display: false,
+
+            scaleLabel: {
+              display: true,
+              labelString: 'Todesfälle',
             },
           },
         ],
@@ -161,11 +162,10 @@ local legend = { position: 'bottom', labels: { usePointStyle: 'true' }, align: '
       ],
     },
     options: {
-      legend: legend,
+      legend: {display: false},
       scales: {
         xAxes: [
           {
-            stacked: true,
             gridLines: {
               display: false,
             },
@@ -173,10 +173,10 @@ local legend = { position: 'bottom', labels: { usePointStyle: 'true' }, align: '
         ],
         yAxes: [
           {
-            display: false,
-            stacked: true,
-            gridLines: {
-              display: false,
+
+            scaleLabel: {
+              display: true,
+              labelString: 'Todesfälle',
             },
           },
         ],
