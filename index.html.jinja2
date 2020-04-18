@@ -77,7 +77,7 @@
         </div>
 
         <div class="row my-3">
-            <div class="col-md-12">
+            <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">Übersicht andere Länder</div>
                     <div class="card-body">
@@ -85,7 +85,37 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">Welt Gesamt</div>
+                    <div class="card-body">
+  <table class="table table-bordered">
+    <tbody>
+      <tr>
+        <th>Gerade Infiziert</th>
+        <td>{{ "{:,}".format(data.world_stat.active)  }}</td>
+      </tr>
+      <tr>
+        <th>Gesamt Infiziert</th>
+        <td>{{ "{:,}".format(data.world_stat.infections)  }}</td>
+      </tr>
+      <tr>
+        <th>Wieder Gesund</th>
+        <td>{{ "{:,}".format(data.world_stat.recovered)  }}</td>
+      </tr>
+      <tr>
+        <th>Todesfall</th>
+        <td>{{ "{:,}".format(data.world_stat.deaths)  }}</td>
+      </tr>
+    </tbody>
+  </table>
+                    </div>
+                </div>
+            </div>
+
         </div>
+
 
         <!--
         <div class="row my-3">
@@ -122,7 +152,7 @@
     </div>
 
     <script>
-        var data = {{ data }}
+        var data = {{ graphdata }}
         for (var id in data) {
             if (data.hasOwnProperty(id)) {
                 var el = document.getElementById(id)

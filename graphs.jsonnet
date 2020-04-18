@@ -49,7 +49,6 @@ local legend = { position: 'bottom', labels: { usePointStyle: 'true' }, align: '
         yAxes: [
           {
             ticks: {
-              beginAtZero: false,
             },
           },
         ],

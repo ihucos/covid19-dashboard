@@ -104,6 +104,11 @@ def countries():
 
 
 @export
+def world_stat():
+    return hopkins.sum().to_dict()
+
+
+@export
 def age_gender():
     smooth_male = rki_age.male.rolling(3, min_periods=1).mean()
     smooth_female = rki_age.female.rolling(3, min_periods=1).mean()

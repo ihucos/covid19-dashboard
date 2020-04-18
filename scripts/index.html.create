@@ -2,9 +2,10 @@
 import subprocess
 import jinja2
 import sys
+import json
 
 try:
-    data = subprocess.check_output(["jsonnet", "graphs.jsonnet"]).decode()
+    graphdata = subprocess.check_output(["jsonnet", "graphs.jsonnet"]).decode()
 except subprocess.CalledProcessError:
     # jsonnet does print the error message
     sys.exit(1)
@@ -17,8 +18,12 @@ with open("build/Chart.min.js") as f:
 
 with open("index.html.jinja2") as file_:
     template = jinja2.Template(file_.read())
+
+with open("build/graphdata.jsonnet") as file_:
+    data = json.loads(file_.read())
+
 index_html = template.render(
-    data=data, bootstrap_css=bootstrap_css, chart_js=chart_js
+    graphdata=graphdata, bootstrap_css=bootstrap_css, chart_js=chart_js, data=data
 )
 with open("build/index.html", "w") as out:
     out.write(index_html)
