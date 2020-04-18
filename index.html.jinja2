@@ -81,6 +81,18 @@
             </div>
         </div>
 
+        <!--
+        <div class="row my-2">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <canvas id="age_gender"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        -->
+
         <div class="row my-4">
             <div class="col">
                 <div class="card text-muted">
@@ -106,7 +118,10 @@
         var data = {{ data }}
         for (var id in data) {
             if (data.hasOwnProperty(id)) {
-                new Chart(document.getElementById(id), data[id]);
+                var el = document.getElementById(id)
+                if (el){
+                    new Chart(el, data[id]);
+                }
             }
         }
     </script>

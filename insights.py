@@ -14,23 +14,24 @@ def export(func):
     return inner
 
 
-df = pd.read_csv("build/rki.csv", index_col="date", parse_dates=True)
+rki = pd.read_csv("build/rki.csv", index_col="date", parse_dates=True)
+rki_age = pd.read_csv("build/rki_age.csv", index_col="age")
 hopkins = pd.read_csv("build/hopkins.csv", index_col="country")
 
 
 @export
 def gender():
-    return df.groupby("gender").sum()["deaths"].rename().to_dict()
+    return rki.groupby("gender").sum()["deaths"].rename().to_dict()
 
 
 @export
 def deaths():
-    return df[["infections", "deaths"]].sum().to_dict()
+    return rki[["infections", "deaths"]].sum().to_dict()
 
 
 @export
 def deaths_by_age():
-    df["age_group"] = df["age_group"].map(
+    rki["age_group"] = rki["age_group"].map(
         {
             "A00-A04": "0-34",
             "A05-A14": "0-34",
@@ -41,14 +42,14 @@ def deaths_by_age():
         }
     )
 
-    return df.groupby("age_group").sum()["deaths"].to_dict()
+    return rki.groupby("age_group").sum()["deaths"].to_dict()
 
 
 @export
 def new_cases():
 
-    sum = df.groupby("date")["infections"].sum()
-    sum_deaths = df.groupby("date")["deaths"].sum()
+    sum = rki.groupby("date")["infections"].sum()
+    sum_deaths = rki.groupby("date")["deaths"].sum()
 
     trend = seasonal_decompose(sum, period=7).trend
 
@@ -75,7 +76,7 @@ def new_cases():
 @export
 def states():
     res = (
-        df.groupby("state")
+        rki.groupby("state")
         .agg("sum")
         .sort_values("deaths", ascending=False)["deaths"]
         .to_dict()
@@ -99,4 +100,15 @@ def countries():
         "active": top.active.tolist(),
         "recovered": top.recovered.tolist(),
         "deaths": top.deaths.tolist(),
+    }
+
+
+@export
+def age_gender():
+    smooth_male = rki_age.male.rolling(3, min_periods=1).mean()
+    smooth_female = rki_age.female.rolling(3, min_periods=1).mean()
+    return {
+        "labels": rki_age.index.tolist(),
+        "female": smooth_female.tolist(),
+        "male": smooth_male.tolist(),
     }

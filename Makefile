@@ -10,7 +10,7 @@ build/%: scripts/%.create
 docs/index.html: build/index.html
 	cp build/index.html docs/index.html
 
-build/graphdata.jsonnet: insights.py build/rki.csv build/hopkins.csv build/population.csv
+build/graphdata.jsonnet: insights.py build/rki.csv build/hopkins.csv build/population.csv build/rki_age.csv
 
 build/index.html: build/graphdata.jsonnet index.html.jinja2 graphs.jsonnet build/Chart.min.js build/bootstrap.min.css
 
@@ -21,6 +21,7 @@ clean:
 .PHONY: watch
 watch:
 	while true; do \
+	    printf '\n\n'; \
 	    make; \
-	    inotifywait --exclude '/\.' -qre close_write .; \
+	    inotifywait --exclude '/\.' -qqre close_write .; \
 	done

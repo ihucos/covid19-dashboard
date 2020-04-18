@@ -1,234 +1,270 @@
-
 local data = import 'build/graphdata.jsonnet';
 
-local colors = ["#2aa198", "#95e1f4"];
-local color_green = "#859900";
-local color_red = "#cb4b16";
-local color_orange = "orange";
-local legend = {"position": "top", "labels": {"usePointStyle": "true"}, "align": "end"};
+local colors = ['#2aa198', '#95e1f4'];
+local color_green = '#859900';
+local color_red = '#cb4b16';
+local color_orange = 'orange';
+local legend = { position: 'top', labels: { usePointStyle: 'true' }, align: 'end' };
+
+local Title(text) = {
+  display: true,
+  text: text,
+};
 
 {
-   "new_cases": {
-      "type": "line",
-      "data": {
-         "labels": data.new_cases.labels,
-         "datasets": [
-            {
-               "data": data.new_cases.deaths,
-               "label": "Übermittelte Todesfälle",
-               "showLine": true,
-               "backgroundColor": color_red,
-               "borderColor": color_red,
-               "pointBackgroundColor": color_red
+  new_cases: {
+    type: 'line',
+    data: {
+      labels: data.new_cases.labels,
+      datasets: [
+        {
+          data: data.new_cases.deaths,
+          label: 'Übermittelte Todesfälle',
+          showLine: true,
+          backgroundColor: color_red,
+          borderColor: color_red,
+          pointBackgroundColor: color_red,
+        },
+        {
+          data: data.new_cases.trend,
+          label: 'Tendenz Bestätigte Neuinfektionen',
+          pointRadius: 0,
+          backgroundColor: 'transparent',
+          borderColor: color_orange,
+          borderWidth: 5,
+          pointBackgroundColor: color_orange,
+          borderDash: [
+            12,
+            5,
+          ],
+        },
+        {
+          data: data.new_cases.raw,
+          label: 'Übermittelte Bestätigte Neuinfektionen',
+          showLine: true,
+          backgroundColor: '#eee',
+          borderColor: '#ddd',
+          pointBackgroundColor: '#ddd',
+        },
+      ],
+    },
+    options: {
+      legend: legend,
+      title: Title("Vom Robert Koch-Institut ermittelte Neugemeldete Fälle pro Tag"),
+      scales: {
+        yAxes: [
+          {
+            ticks: {
+              beginAtZero: false,
             },
-            {
-               "data": data.new_cases.trend,
-               "label": "Tendenz Bestätigte Infektionen",
-               "pointRadius": 0,
-               "backgroundColor": "transparent",
-               "borderColor": color_orange,
-               "borderWidth": 5,
-               "pointBackgroundColor": color_orange,
-               "borderDash": [
-                  12,
-                  5
-               ]
+          },
+        ],
+      },
+    },
+  },
+  deaths: {
+    type: 'pie',
+    data: {
+      labels: [
+        'Gesamt Infiziert',
+        'Todesfall',
+      ],
+      datasets: [
+        {
+          backgroundColor: [color_orange, color_red],
+          borderWidth: 0,
+          data: [
+            data.deaths.infections,
+            data.deaths.deaths,
+          ],
+        },
+      ],
+    },
+    options: {
+      title: Title("Todesfall vs Gesamt Infiziert"),
+      legend: legend,
+    },
+  },
+  gender: {
+    type: 'pie',
+    data: {
+      labels: [
+        'Todesfall Frau',
+        'Todesfall Mann',
+      ],
+      datasets: [
+        {
+          backgroundColor: [
+            color_red,
+            'white',
+          ],
+          borderColor: color_red,
+          data: [
+            data.gender.F,
+            data.gender.M,
+          ],
+        },
+      ],
+    },
+    options: {
+      title: Title("Todessfall nach Geschlecht"),
+      legend: legend,
+    },
+  },
+  deaths_by_age: {
+    type: 'bar',
+    data: {
+      labels: [
+        'bis 34 Jahre',
+        '35 bis 59 Jahre',
+        '60 bis 79 Jahre',
+        'Ueber A80 Jahre',
+      ],
+      datasets: [
+        {
+          backgroundColor: color_red,
+          borderWidth: 0,
+          label: 'Todesfall',
+          data: [
+            data.deaths_by_age['0-34'],
+            data.deaths_by_age['35-59'],
+            data.deaths_by_age['60-79'],
+            data.deaths_by_age['80+'],
+          ],
+        },
+      ],
+    },
+    options: {
+      title: Title("Todesfall nach Altersgruppe"),
+      legend: legend,
+      scales: {
+        xAxes: [
+          {
+            gridLines: {
+              display: false,
             },
-            {
-               "data": data.new_cases.raw,
-               "label": "Übermittelte Bestätigte Infektionen",
-               "showLine": true,
-               "backgroundColor": "#eee",
-               "borderColor": "#ddd",
-               "pointBackgroundColor": "#ddd"
-            }
-         ]
-      },
-      "options": {
-         "legend": legend,
-         "scales": {
-            "yAxes": [
-               {
-                  "ticks": {
-                     "beginAtZero": false
-                  }
-               }
-            ]
-         }
-      }
-   },
-   "deaths": {
-      "type": "pie",
-      "data": {
-         "labels": [
-            "Gesamt Infiziert",
-            "Todesfall"
-         ],
-         "datasets": [
-            {
-               "backgroundColor": [color_orange, color_red],
-               "borderWidth": 0,
-               "data": [
-                  data.deaths.infections,
-                  data.deaths.deaths
-               ]
-            }
-         ]
-      },
-      "options": {
-         "legend": legend
-      }
-   },
-   "gender": {
-      "type": "pie",
-      "data": {
-         "labels": [
-            "Todesfall Frau",
-            "Todesfall Mann"
-         ],
-         "datasets": [
-            {
-               "backgroundColor": [
-                  color_red,
-                  "white"
-               ],
-               "borderColor": color_red,
-               "data": [
-                  data.gender.F,
-                  data.gender.M
-               ]
-            }
-         ]
-      },
-      "options": {
-         "legend": legend
-      }
-   },
-   "deaths_by_age": {
-      "type": "bar",
-      "data": {
-         "labels": [
-            "bis 34 Jahre",
-            "35 bis 59 Jahre",
-            "60 bis 79 Jahre",
-            "Ueber A80 Jahre"
-         ],
-         "datasets": [
-            {
-               "backgroundColor": color_red,
-               "borderWidth": 0,
-               "label": "Todesfall",
-               "data": [
-                  data.deaths_by_age["0-34"],
-                  data.deaths_by_age["35-59"],
-                  data.deaths_by_age["60-79"],
-                  data.deaths_by_age["80+"]
-               ]
-            }
-         ]
-      },
-      "options": {
-         "legend": legend,
-         "scales": {
-            "xAxes": [
-               {
-                  "gridLines": {
-                     "display": false
-                  }
-               }
-            ],
-            "yAxes": [
-               {
-                  "display": false,
-                  "gridLines": {
-                     "display": false
-                  }
-               }
-            ]
-         }
-      }
-   },
-   "states": {
-      "type": "bar",
-      "data": {
-         "labels": data.states.labels,
-         "datasets": [
-            {
-               "data": data.states.deaths,
-               "label": "Todesfall",
-               "backgroundColor": color_red,
-               "borderWidth": 0
-            }
-         ]
-      },
-      "options": {
-         "legend": legend,
-         "scales": {
-            "xAxes": [
-               {
-                  "stacked": true,
-                  "gridLines": {
-                     "display": false
-                  }
-               }
-            ],
-            "yAxes": [
-               {
-                  "display": false,
-                  "stacked": true,
-                  "gridLines": {
-                     "display": false
-                  }
-               }
-            ]
-         }
-      }
-   },
-   "countries": {
-      "type": "bar",
-      "data": {
-         "labels": data.countries.labels,
-         "datasets": [
-            {
-               "data": data.countries.recovered,
-               "label": "Wieder Gesund",
-               "backgroundColor": color_green,
-               "borderWidth": 0
+          },
+        ],
+        yAxes: [
+          {
+            display: false,
+            gridLines: {
+              display: false,
             },
-            {
-               "data": data.countries.active,
-               "label": "Gerade Infiziert",
-               "backgroundColor": color_orange,
-               "borderWidth": 0
-            },
-            {
-               "data": data.countries.deaths,
-               "label": "Todesfall",
-               "backgroundColor": color_red,
-               "borderWidth": 0
-            }
-         ]
+          },
+        ],
       },
-      "options": {
-         "legend": legend,
-         "scales": {
-            "xAxes": [
-               {
-                  "gridLines": {
-                     "display": false
-                  },
-                  "stacked": true
-               }
-            ],
-            "yAxes": [
-               {
-                  "gridLines": {
-                     "display": false
-                  },
-                  "stacked": true
-               }
-            ]
-         }
-      }
-   }
+    },
+  },
+  states: {
+    type: 'bar',
+    data: {
+      labels: data.states.labels,
+      datasets: [
+        {
+          data: data.states.deaths,
+          label: 'Todesfall',
+          backgroundColor: color_red,
+          borderWidth: 0,
+        },
+      ],
+    },
+    options: {
+      title: Title("Todesfälle pro Bundesland"),
+      legend: legend,
+      scales: {
+        xAxes: [
+          {
+            stacked: true,
+            gridLines: {
+              display: false,
+            },
+          },
+        ],
+        yAxes: [
+          {
+            display: false,
+            stacked: true,
+            gridLines: {
+              display: false,
+            },
+          },
+        ],
+      },
+    },
+  },
+  countries: {
+    type: 'bar',
+    data: {
+      labels: data.countries.labels,
+      datasets: [
+        {
+          data: data.countries.recovered,
+          label: 'Wieder Gesund',
+          backgroundColor: color_green,
+          borderWidth: 0,
+        },
+        {
+          data: data.countries.active,
+          label: 'Gerade Infiziert',
+          backgroundColor: color_orange,
+          borderWidth: 0,
+        },
+        {
+          data: data.countries.deaths,
+          label: 'Todesfall',
+          backgroundColor: color_red,
+          borderWidth: 0,
+        },
+      ],
+    },
+    options: {
+      title: Title("Übersicht andere Länder"),
+      legend: legend,
+      scales: {
+        xAxes: [
+          {
+            gridLines: {
+              display: false,
+            },
+            stacked: true,
+          },
+        ],
+        yAxes: [
+          {
+            gridLines: {
+              display: false,
+            },
+            stacked: true,
+          },
+        ],
+      },
+    },
+  },
+  age_gender: {
+    type: 'bar',
+    data: {
+      labels: data.age_gender.labels,
+      datasets: [
+        {
+          data: data.age_gender.male,
+          label: 'Male',
+          backgroundColor: 'blue',
+        },
+        {
+          data: data.age_gender.female,
+          label: 'Female',
+          backgroundColor: 'magenta',
+        },
+      ],
+    },
+    options: {
+      title: Title("Todesfall nach Altersgruppe"),
+      responsive: true,
+      tooltips: {
+        mode: 'index',
+        intersect: true,
+      },
+    },
+  },
 }

@@ -1,0 +1,12 @@
+#!/usr/bin/env python3
+
+import pandas as pd
+
+df = pd.read_csv(
+    "manual-data/rki-survstat-covid10/Data.csv",
+    encoding="utf-16le",
+    sep="\t",
+    skiprows=1,
+).rename(columns={"Unnamed: 0": "age"})
+df.age = df.age.str.extract(r"A(\d\d)")
+df.to_csv("build/rki_age.csv", index=False)

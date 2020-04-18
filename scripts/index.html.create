@@ -1,8 +1,13 @@
 #!/usr/bin/env python3
 import subprocess
 import jinja2
+import sys
 
-data = subprocess.check_output(["jsonnet", "graphs.jsonnet"]).decode()
+try:
+    data = subprocess.check_output(["jsonnet", "graphs.jsonnet"]).decode()
+except subprocess.CalledProcessError:
+    # jsonnet does print the error message
+    sys.exit(1)
 
 with open("build/bootstrap.min.css") as f:
     bootstrap_css = f.read()
