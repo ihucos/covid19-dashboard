@@ -4,7 +4,7 @@ local colors = ['#2aa198', '#95e1f4'];
 local color_green = '#859900';
 local color_red = '#cb4b16';
 local color_orange = 'orange';
-local legend = { position: 'top', labels: { usePointStyle: 'true' }, align: 'end' };
+local legend = { position: 'bottom', labels: { usePointStyle: 'true' }, align: 'start' };
 
 {
   new_cases: {
