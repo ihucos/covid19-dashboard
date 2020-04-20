@@ -23,7 +23,7 @@
 
         <div class="row my-3">
             <div class="col">
-                <h1>Covid-19 In Deutschland</h1>
+                <h1>Corona in Deutschland</h1>
             </div>
         </div>
 
@@ -46,34 +46,11 @@
      
 
 <ul>
-  <li>
-                        Zahl der neuen Corona-Todesfälle in Spanien sinkt weiter
-</li>
-  <li>
-                        Einnahmen aus Gewerbesteuern brechen ein
-</li>
-  <li>
-                        Bayern führt Maskenpflicht ein
-</li>
-  <li>
-                        Abiturienten in Sachsen zurück an Schulen
-</li>
-  <li>
-                        Merkel kritisiert "Öffnungsdiskussionsorgien"
-</li>
-  <li>
-                        200 Corona-Patienten aus Europa in deutschen Kliniken
-</li>
-  <li>
-                        RKI meldet 1775 Neuinfektionen in Deutschland
-</li>
-  <li>
-                        RKI meldet 1775 Neuinfektionen in Deutschland
-</li>
-  <li>
-                        RKI meldet 1775 Neuinfektionen in Deutschland
-</li>
-</ul>
+{% for item in tagesschau.today %}
+<li><a class="text-dark" href="{{item.link}}" target="_blank">{{item.text}}</a></li>
+
+{% endfor %}
+<ul>
 
                     </div>
                 </div>
@@ -85,14 +62,11 @@
      
 
 <ol>
-<li>Immer weniger Todesfälle in Spanien.</li>
-<li>Bundesweit knapp 13.000 Intensivbetten frei.</li>
-<li>Mehr als 100.000 Tote in Europa.</li>
-<li>Trump heizt Proteste gegen Schutzmaßnahmen an.</li>
-<li>Länder gehen Sonderwege im Einzelhandel.</li>
-<li>Mehr als 600.000 Infizierte in den USA.</li>
-<li>Frankreich verzeichnet 762 neue Todesfälle.</li>
-</ol>
+{% for item in tagesschau.last_7_days %}
+<li><a class="text-dark" href="{{item.link}}" target="_blank">{{item.text}}</a></li>
+
+{% endfor %}
+<ol>
 
                     </div>
                 </div>
@@ -209,7 +183,7 @@
                         auf einem Blick eine Situative Einschätzungen des
                         Verlaufs von Covid-19 zu erlangen. Die Daten werden von
                         folgenden Quellen bezogen: Robert Koch-Institut und
-                        Johns Hopkins University. Mitarbeit in der <a
+                        Johns Hopkins University, Tagesschau. Mitarbeit in der <a
                         href="https://github.com/ihucos/covid19-dashboard/">Github Seite</a> dieses Projekts jederzeit
                         willkommen.  </p>
 

@@ -12,7 +12,7 @@ index.html: build/index.html
 
 build/graphdata.jsonnet: insights.py build/rki.csv build/hopkins.csv build/population.csv build/rki_age.csv
 
-build/index.html: build/graphdata.jsonnet index.html.jinja2 graphs.jsonnet build/Chart.min.js build/bootstrap.min.css
+build/index.html: build/graphdata.jsonnet index.html.jinja2 graphs.jsonnet build/Chart.min.js build/bootstrap.min.css build/tagesschau.json
 
 .PHONY: clean
 clean:

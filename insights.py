@@ -4,12 +4,17 @@ import yaml
 import pandas as pd
 import jinja2
 from statsmodels.tsa.seasonal import seasonal_decompose
+import urllib.request
+import re
 
 insights = {}
+
+
 def export(func):
     def inner():
         val = func()
         return val
+
     insights[func.__name__] = inner
     return inner
 
@@ -31,16 +36,14 @@ def deaths():
 
 @export
 def deaths_by_age():
-    rki["age_group"] = rki["age_group"].map(
-        {
-            "A00-A04": "0-34",
-            "A05-A14": "0-34",
-            "A15-A34": "0-34",
-            "A35-A59": "35-59",
-            "A60-A79": "60-79",
-            "A80+": "80+",
-        }
-    )
+    rki["age_group"] = rki["age_group"].map({
+        "A00-A04": "0-34",
+        "A05-A14": "0-34",
+        "A15-A34": "0-34",
+        "A35-A59": "35-59",
+        "A60-A79": "60-79",
+        "A80+": "80+",
+    })
 
     return rki.groupby("age_group").sum()["deaths"].to_dict()
 
@@ -75,12 +78,8 @@ def new_cases():
 
 @export
 def states():
-    res = (
-        rki.groupby("state")
-        .agg("sum")
-        .sort_values("deaths", ascending=False)["deaths"]
-        .to_dict()
-    )
+    res = (rki.groupby("state").agg("sum").sort_values(
+        "deaths", ascending=False)["deaths"].to_dict())
     return {
         "labels": list(res.keys()),
         "deaths": [float(i) for i in res.values()],
@@ -91,8 +90,7 @@ def states():
 def countries():
     ranked_hopkins = hopkins.copy()
     ranked_hopkins["total"] = (
-        hopkins["active"] + hopkins["deaths"] + hopkins["recovered"]
-    )
+        hopkins["active"] + hopkins["deaths"] + hopkins["recovered"])
     top = ranked_hopkins.sort_values("total", ascending=False)[:10]
 
     return {
