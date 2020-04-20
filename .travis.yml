@@ -10,9 +10,8 @@ script:
 deploy:
   provider: pages
   skip_cleanup: true
-  github_token: $GITHUB_TOKEN
+  github_token:
+    secure: Tq43/ZoaRg4yhtbUm72abMmbNH33BfIXnaXp+mU+GuupV41eZm15gbHvNU0gvAhkCgR7raZIDqkDQwEdtmn2Hn8yrmNRSx7BoHSKKBALFkGGxWZ9j9bcM59xyBSDQFYKeF5HT8WfM27rajwR44gT+kpnAWeyCfBAlnLkMW5NhNPNdYef+gqRkDc4/qzoI3NSVTXwOYiG0O9DEYh82SwCYE8BRG3LyFBbUhC6u9vNBjGDCmaHJd4SFWXI4xjpLvL7C5Zt2dNJtSty8HE/Xe/4lu+VC/7mIVnwScwGykYSww6e8ryO1ExXgRUSXJGYKmH7ecn2kh3edUO0uGkzELJ/So18zbuYY8239n0QXEUf/nJPoGax1dZr+7ShQMwxCGnrIVRlYWfVkdGnU3Hq+14ieXIlwoC3vB/CFUFumpb/uEyDI6slHoTVnLPzETlgfJqU2ljbzZFWHxSzse6lnSnd0g9dIVacbApHtzIJXaubeQwSgz6L38w9EMXu4H5/Xns/42ZjP6+lToVXLxNfx6LcD6u3EqsDoU1V7xZ/OjBC3gBfSvviswDJGbH2zUMI++eqYLdKWcwrlHGP/Q5S2MXeW7OvwfKDspY4Xk+2zWNSDxUAxKKfn7iwNj32sN0l98r8dnhlOs4Yn5r9FLsTUuyvINkPobnkwhvv5fQQ/LIHXks=
   keep_history: true
   on:
     branch: master
-env:
-  - GITHUB_TOKEN=testest
