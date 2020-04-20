@@ -39,37 +39,42 @@
         </div>
 
         <div class="row my-3">
-            <div class="col-md-6">
+
+            <div class="col-md-12">
+              <div class="card-group">
                 <div class="card">
-                        <div class="card-header">Heute - Tagesschau</div>
-                    <div class="card-body">
-     
-
-<ul>
-{% for item in tagesschau.today %}
-<li><a class="text-dark" href="{{item.link}}" target="_blank">{{item.text}}</a></li>
-
-{% endfor %}
-<ul>
-
-                    </div>
+                        <div class="card-header">Heute</div>
+                          <div class="card-body">
+                          <ul>
+                          {% for item in tagesschau.last_days[0] %}
+                          <li class="small"><a class="text-dark" href="{{item.link}}" target="_blank">{{item.text}}</a></li>
+                          {% endfor %}
+                          </ul>
+                          </div>
                 </div>
-            </div>
-            <div class="col-md-6">
+
                 <div class="card">
-                        <div class="card-header">Letzte 7 tage - Tagesschau</div>
-                    <div class="card-body">
-     
-
-<ol>
-{% for item in tagesschau.last_7_days %}
-<li><a class="text-dark" href="{{item.link}}" target="_blank">{{item.text}}</a></li>
-
-{% endfor %}
-<ol>
-
-                    </div>
+                        <div class="card-header">Gestern</div>
+                          <div class="card-body">
+                          <ul>
+                          {% for item in tagesschau.last_days[1] %}
+                          <li class="small"><a class="text-dark" href="{{item.link}}" target="_blank">{{item.text}}</a></li>
+                          {% endfor %}
+                          </ul>
+                          </div>
                 </div>
+
+                <div class="card">
+                        <div class="card-header">Letzte 7 Tage</div>
+                          <div class="card-body">
+                          <ol>
+                          {% for item in tagesschau.summary %}
+                          <li class="small"><a class="text-dark" href="{{item.link}}" target="_blank">{{item.text}}</a></li>
+                          {% endfor %}
+                          </ol>
+                          </div>
+                </div>
+              </div>
             </div>
         </div>
 
@@ -77,20 +82,18 @@
 
 
         <div class="row my-3">
-            <div class="col-md-8">
-                <div class="card">
+            <div class="col-md-12">
+                <div class="card-group">
+                <div class="card" style="flex-grow: 2">
                     <div class="card-header">Übersicht andere Länder</div>
                     <div class="card-body">
                         <canvas id="countries" height=100></canvas>
                     </div>
                 </div>
-            </div>
-
-            <div class="col-md-4">
                 <div class="card">
                     <div class="card-header">Welt Gesamt</div>
                     <div class="card-body">
-  <table class="table table-bordered">
+  <table class="table table-borderless">
     <tbody>
       <tr>
         <th>Gerade Infiziert</th>
@@ -112,6 +115,7 @@
   </table>
                     </div>
                 </div>
+            </div>
             </div>
 
         </div>

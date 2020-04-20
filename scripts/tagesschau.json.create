@@ -14,10 +14,10 @@ assert len(
     matches
 ) == 7, "did not found one entry for the last 7 days, found {}".format(
     len(matches))
-news_last_7_days = []
+summary = []
 for url_part, link_text in matches:
     link_text = link_text.split(": ")[-1].strip(" +")
-    news_last_7_days.append({
+    summary.append({
         "link":
         "https://www.tagesschau.de{}".format(url_part),
         "text":
@@ -30,14 +30,18 @@ with urllib.request.urlopen(URL) as response:
 #
 # parse single page entry
 #
-today = []
-link_today = news_last_7_days[0]["link"]
-with urllib.request.urlopen(link_today) as response:
-    html = response.read().decode()
-match, = re.findall(DETAIL_PAGE_LIST_REGEX, html)
-for headline in re.findall("<li>(.*?)</li>", match):
-    today.append({"link": link_today, "text": headline})
 
-data = {"last_7_days": news_last_7_days, "today": today}
+last_days = []
+for entry in summary:
+    this_day = []
+    link_today = entry["link"]
+    with urllib.request.urlopen(link_today) as response:
+        html = response.read().decode()
+    match, = re.findall(DETAIL_PAGE_LIST_REGEX, html)
+    for headline in re.findall("<li>(.*?)</li>", match):
+        this_day.append({"link": link_today, "text": headline})
+    last_days.append(this_day)
+
+data = {"summary": summary, "last_days": last_days}
 with open("build/tagesschau.json", "w") as f:
     f.write(json.dumps(data, indent=2))
