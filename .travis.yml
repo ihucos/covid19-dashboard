@@ -15,5 +15,4 @@ deploy:
   on:
     branch: master
 env:
-  global:
-    secure: uOMlOxBxJchGKmkbDUrucW82yFkgdmfu80Yxqw7MpLMj67oGE8eUzr3x2/qYL3kY/sQKgHAjJxHAqIYk13/8jQMbwlZikyOvu1LBFlwJwvl1BPbh+K0uOg1h+OSVJIJgAx42782cYB5NW48ak0iNA1+7BEnlqhV1T3VuDg5FIi92seuHFILMzwkCwsI+bVFuBb9VQ3MBQR887Ajd9ECiP+xzE2wrd1oQewrzBPLP2F4LqLmn315wDC/hZ9yiQNLM5fXcB/ur/+oZlSCV7t6DNNHQAxLz/jAV7/KRNPN8FK9synEYdlNulhlhyuLZHr3taFJz0xjDvEq+Tir13sUN2yc/iZmYO9+MDO6ye7fRwWbz7TVsJb6nuzDdrxj/qDi1q1LADc+eLDqDnhADohJglEwRiQ2qMb5nseMX0dR+fLu/fLV/Jas2HZZo4jdhGOulFlt8FT3KbR9hUq+Y0c9cbWvlOPt4iaXzk8ygIGVvHpQEWqQjLsXhz/TKH8jbgNvLvOsfcz/udowNj/NlUF328L2iGTJkJtpfY6sd5cVBdeJx7D9hjOjVdsftxr7RNw/1uMsPVV7ueqvJ7Bdc8O4E4lEGxv3XdWxi15ETrztOy4fXe/P22as5KOB824dWcNrO+wwn5pvPFbLbJ1Wkhi+BgrDBixkH+HlYk5CvdpvqL/A=
+  - GITHUB_TOKEN=testest
