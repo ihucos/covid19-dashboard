@@ -1,142 +1,166 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta name="generator" content=
-"HTML Tidy for HTML5 for Linux version 5.2.0">
-<!-- Required meta tags -->
-<meta charset="utf-8">
-<meta name="viewport" content=
-"width=device-width, initial-scale=1, shrink-to-fit=no">
-<style>
-      {{ bootstrap_css }}
-</style>
 
-<script>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <style>
+      {{ bootstrap_css }}
+    </style>
+
+    <script>
       {{ chart_js }}
-</script>
-<title>Covid-19 In Deutschland</title>
+    </script>
+
+    <title>Covid-19 In Deutschland</title>
 </head>
+
 <body>
-<div class="container">
-<div class="row my-3">
-<div class="col">
-<h1>Corona in Deutschland</h1>
-</div>
-</div>
-<div class="row my-3">
-<div class="col-md-12">
-<div class="card">
-<div class="card-header">Vom Robert Koch-Institut ermittelte
-Neugemeldete Fälle pro Tag</div>
-<div class="card-body">
-<canvas id="new_cases" height="150"></canvas>
-</div>
-</div>
-</div>
-</div>
-<div class="row my-3">
-<div class="col-md-6">
-<div class="card">
-<div class="card-header">Heute - Tagesschau</div>
-<div class="card-body">
+
+    <div class="container">
+
+        <div class="row my-3">
+            <div class="col">
+                <h1>Corona in Deutschland</h1>
+            </div>
+        </div>
+
+        <div class="row my-3">
+            <div class="col-md-12">
+                <div class="card">
+                        <div class="card-header">Vom Robert Koch-Institut ermittelte Neugemeldete Fälle pro Tag</div>
+                    <div class="card-body">
+                        <canvas id="new_cases" height="150"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row my-3">
+            <div class="col-md-6">
+                <div class="card">
+                        <div class="card-header">Heute - Tagesschau</div>
+                    <div class="card-body">
+     
+
 <ul>
-<li style="list-style: none">{% for item in tagesschau.today
-%}</li>
-<li><a class="text-dark" href="{{item.link}}" target=
-"_blank">{{item.text}}</a></li>
-<li style="list-style: none">{% endfor %}</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="col-md-6">
-<div class="card">
-<div class="card-header">Letzte 7 tage - Tagesschau</div>
-<div class="card-body">
+{% for item in tagesschau.today %}
+<li><a class="text-dark" href="{{item.link}}" target="_blank">{{item.text}}</a></li>
+
+{% endfor %}
+<ul>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                        <div class="card-header">Letzte 7 tage - Tagesschau</div>
+                    <div class="card-body">
+     
+
 <ol>
-<li style="list-style: none">{% for item in tagesschau.last_7_days
-%}</li>
-<li><a class="text-dark" href="{{item.link}}" target=
-"_blank">{{item.text}}</a>{% endfor %}</li>
-</ol>
-</div>
-</div>
-</div>
-</div>
-<div class="row my-3">
-<div class="col-md-8">
-<div class="card">
-<div class="card-header">Übersicht andere Länder</div>
-<div class="card-body">
-<canvas id="countries" height="100"></canvas>
-</div>
-</div>
-</div>
-<div class="col-md-4">
-<div class="card">
-<div class="card-header">Welt Gesamt</div>
-<div class="card-body">
-<table class="table table-bordered">
-<tbody>
-<tr>
-<th>Gerade Infiziert</th>
-<td>{{ "{:,}".format(data.world_stat.active) }}</td>
-</tr>
-<tr>
-<th>Gesamt Infiziert</th>
-<td>{{ "{:,}".format(data.world_stat.infections) }}</td>
-</tr>
-<tr>
-<th>Wieder Gesund</th>
-<td>{{ "{:,}".format(data.world_stat.recovered) }}</td>
-</tr>
-<tr>
-<th>Todesfall</th>
-<td>{{ "{:,}".format(data.world_stat.deaths) }}</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-<div class="row my-3">
-<div class="col-md-12">
-<div class="card">
-<div class="card-header">Todesfälle pro Bundesland</div>
-<div class="card-body">
-<canvas id="states" height="50"></canvas>
-</div>
-</div>
-</div>
-</div>
-<div class="row my-3">
-<div class="col-md-4">
-<div class="card">
-<div class="card-header">Todesfall vs Gesamt Infiziert</div>
-<div class="card-body">
-<canvas id="deaths"></canvas>
-</div>
-</div>
-</div>
-<div class="col-md-4">
-<div class="card">
-<div class="card-header">Todesfall Mann vs Todesfall Frau</div>
-<div class="card-body">
-<canvas id="gender"></canvas>
-</div>
-</div>
-</div>
-<div class="col-md-4">
-<div class="card">
-<div class="card-header">Todesfall nach Altersgruppe</div>
-<div class="card-body">
-<canvas id="deaths_by_age"></canvas>
-</div>
-</div>
-</div>
-</div>
-<!--
+{% for item in tagesschau.last_7_days %}
+<li><a class="text-dark" href="{{item.link}}" target="_blank">{{item.text}}</a></li>
+
+{% endfor %}
+<ol>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="row my-3">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">Übersicht andere Länder</div>
+                    <div class="card-body">
+                        <canvas id="countries" height=100></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">Welt Gesamt</div>
+                    <div class="card-body">
+  <table class="table table-bordered">
+    <tbody>
+      <tr>
+        <th>Gerade Infiziert</th>
+        <td>{{ "{:,}".format(data.world_stat.active)  }}</td>
+      </tr>
+      <tr>
+        <th>Gesamt Infiziert</th>
+        <td>{{ "{:,}".format(data.world_stat.infections)  }}</td>
+      </tr>
+      <tr>
+        <th>Wieder Gesund</th>
+        <td>{{ "{:,}".format(data.world_stat.recovered)  }}</td>
+      </tr>
+      <tr>
+        <th>Todesfall</th>
+        <td>{{ "{:,}".format(data.world_stat.deaths)  }}</td>
+      </tr>
+    </tbody>
+  </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+
+
+        <div class="row my-3">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">Todesfälle pro Bundesland</div>
+                    <div class="card-body">
+                        <canvas id="states" height="50"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row my-3">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">Todesfall vs Gesamt Infiziert</div>
+                    <div class="card-body">
+                        <canvas id="deaths"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">Todesfall Mann vs Todesfall Frau</div>
+                    <div class="card-body">
+                        <canvas id="gender"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">Todesfall nach Altersgruppe</div>
+                    <div class="card-body">
+                        <canvas id="deaths_by_age"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!--
         <div class="row my-3">
             <div class="col-md-12">
                 <div class="card">
@@ -148,24 +172,29 @@ Neugemeldete Fälle pro Tag</div>
             </div>
         </div>
         -->
-<div class="row my-4">
-<div class="col">
-<div class="card text-muted">
-<div class="card-header">Über dieses Projekt</div>
-<div class="card-body" style="max-width: 50rem;">
-<p class="card-text">Der Covid-19 Dashboard wird täglich
-aktualisiert und ist Open Source. Ziel ist es auf einem Blick eine
-Situative Einschätzungen des Verlaufs von Covid-19 zu erlangen. Die
-Daten werden von folgenden Quellen bezogen: Robert Koch-Institut
-und Johns Hopkins University, Tagesschau. Mitarbeit in der <a href=
-"https://github.com/ihucos/covid19-dashboard/">Github Seite</a>
-dieses Projekts jederzeit willkommen.</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-<script>
+
+        <div class="row my-4">
+            <div class="col">
+                <div class="card text-muted">
+                    <div class="card-header">Über dieses Projekt</div>
+                    <div class="card-body" style="max-width: 50rem;">
+                        <p class="card-text">Der Covid-19 Dashboard wird
+                        täglich aktualisiert und ist Open Source. Ziel ist es
+                        auf einem Blick eine Situative Einschätzungen des
+                        Verlaufs von Covid-19 zu erlangen. Die Daten werden von
+                        folgenden Quellen bezogen: Robert Koch-Institut und
+                        Johns Hopkins University, Tagesschau. Mitarbeit in der <a
+                        href="https://github.com/ihucos/covid19-dashboard/">Github Seite</a> dieses Projekts jederzeit
+                        willkommen.  </p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
         var data = {{ graphdata }}
         for (var id in data) {
             if (data.hasOwnProperty(id)) {
@@ -175,6 +204,8 @@ dieses Projekts jederzeit willkommen.</p>
                 }
             }
         }
-</script>
+    </script>
+
 </body>
+
 </html>
