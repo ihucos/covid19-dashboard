@@ -1,5 +1,5 @@
 
-all: build/ index.html
+all: build/ docs/index.html
 
 build/:
 	mkdir -p build
@@ -7,8 +7,8 @@ build/:
 build/%: scripts/%.create
 	scripts/$(@F).create
 
-index.html: build/index.html
-	cp build/index.html index.html
+docs/index.html: build/index.html
+	cp build/index.html docs/index.html
 
 build/graphdata.jsonnet: insights.py build/rki.csv build/hopkins.csv build/population.csv build/rki_age.csv
 
