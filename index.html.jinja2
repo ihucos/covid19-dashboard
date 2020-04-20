@@ -23,74 +23,78 @@
 
         <div class="row my-3">
             <div class="col">
-                <h1>Covid-19 In Deutschland</h1>
+                <h1>Corona in Deutschland</h1>
             </div>
         </div>
 
         <div class="row my-3">
             <div class="col-md-12">
                 <div class="card">
-                        <div class="card-header">Vom Robert Koch-Institut ermittelte Neugemeldete Fälle pro Tag</div>
+                        <div class="card-header">Neugemeldete Fälle pro Tag</div>
                     <div class="card-body">
                         <canvas id="new_cases" height="150"></canvas>
                     </div>
                 </div>
+            <div class="text-right text-muted">Quelle: Robert Koch-Institut</div>
             </div>
         </div>
 
         <div class="row my-3">
             <div class="col-md-12">
+              <div class="card-group">
                 <div class="card">
-                    <div class="card-header">Todesfälle pro Bundesland</div>
-                    <div class="card-body">
-                        <canvas id="states" height="50"></canvas>
-                    </div>
+                        <div class="card-header">Heute</div>
+                          <div class="card-body">
+                          <ul>
+                          {% for item in tagesschau.last_days[0] %}
+                          <li class="small"><a class="text-dark" href="{{item.link}}" target="_blank">{{item.text}}</a></li>
+                          {% endfor %}
+                          </ul>
+                          </div>
                 </div>
+
+                <div class="card">
+                        <div class="card-header">Gestern</div>
+                          <div class="card-body">
+                          <ul>
+                          {% for item in tagesschau.last_days[1] %}
+                          <li class="small"><a class="text-dark" href="{{item.link}}" target="_blank">{{item.text}}</a></li>
+                          {% endfor %}
+                          </ul>
+                          </div>
+                </div>
+
+                <div class="card">
+                        <div class="card-header">Letzte 7 Tage</div>
+                          <div class="card-body">
+                          <ol>
+                          {% for item in tagesschau.summary %}
+                          <li class="small"><a class="text-dark" href="{{item.link}}" target="_blank">{{item.text}}</a></li>
+                          {% endfor %}
+                          </ol>
+                          </div>
+                </div>
+              </div>
+              <div class="text-right text-muted">Quelle: Tagesschau</div>
             </div>
         </div>
 
-        <div class="row my-3">
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header">Todesfall vs Gesamt Infiziert</div>
-                    <div class="card-body">
-                        <canvas id="deaths"></canvas>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header">Todesfall Mann vs Todesfall Frau</div>
-                    <div class="card-body">
-                        <canvas id="gender"></canvas>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header">Todesfall nach Altersgruppe</div>
-                    <div class="card-body">
-                        <canvas id="deaths_by_age"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+
 
         <div class="row my-3">
-            <div class="col-md-8">
-                <div class="card">
+            <div class="col-md-12">
+                <div class="card-group">
+                <div class="card" style="flex-grow: 2">
                     <div class="card-header">Übersicht andere Länder</div>
                     <div class="card-body">
                         <canvas id="countries" height=100></canvas>
                     </div>
                 </div>
-            </div>
-
-            <div class="col-md-4">
                 <div class="card">
                     <div class="card-header">Welt Gesamt</div>
                     <div class="card-body">
-  <table class="table table-bordered">
+  <table class="table table-borderless">
     <tbody>
       <tr>
         <th>Gerade Infiziert</th>
@@ -113,7 +117,55 @@
                     </div>
                 </div>
             </div>
+            <div class="text-right text-muted">Quelle: Johns Hopkins University</div>
+            </div>
+        </div>
 
+
+
+
+
+
+        <div class="row my-3">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">Todesfälle pro Bundesland</div>
+                    <div class="card-body">
+                        <canvas id="states" height="50"></canvas>
+                    </div>
+                </div>
+            <div class="text-right text-muted">Quelle: Robert Koch-Institut</div>
+            </div>
+        </div>
+
+        <div class="row my-3">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">Todesfall vs Gesamt Infiziert</div>
+                    <div class="card-body">
+                        <canvas id="deaths"></canvas>
+                    </div>
+                </div>
+               <div class="text-right small text-muted">Quelle: Robert Koch-Institut</div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">Todesfall Mann vs Todesfall Frau</div>
+                    <div class="card-body">
+                        <canvas id="gender"></canvas>
+                    </div>
+                </div>
+               <div class="text-right small text-muted">Quelle: Robert Koch-Institut</div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">Todesfall nach Altersgruppe</div>
+                    <div class="card-body">
+                        <canvas id="deaths_by_age"></canvas>
+                    </div>
+                </div>
+               <div class="text-right small text-muted">Quelle: Robert Koch-Institut</div>
+            </div>
         </div>
 
 
@@ -140,7 +192,7 @@
                         auf einem Blick eine Situative Einschätzungen des
                         Verlaufs von Covid-19 zu erlangen. Die Daten werden von
                         folgenden Quellen bezogen: Robert Koch-Institut und
-                        Johns Hopkins University. Mitarbeit in der <a
+                        Johns Hopkins University, Tagesschau. Mitarbeit in der <a
                         href="https://github.com/ihucos/covid19-dashboard/">Github Seite</a> dieses Projekts jederzeit
                         willkommen.  </p>
 
