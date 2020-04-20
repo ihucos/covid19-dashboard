@@ -2,6 +2,7 @@ language: generic
 dist: bionic
 
 install:
+  - sudo apt-get install python3-pandas
   - sudo snap install jsonnet
 
 script:
