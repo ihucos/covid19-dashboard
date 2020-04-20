@@ -1,0 +1,43 @@
+#!/usr/bin/env python3
+import urllib.request
+import json
+import re
+
+URL = 'https://www.tagesschau.de/allemeldungen/'
+REGEX = '<a href="(/newsticker/liveblog-corona.*?)".*?>(.*?)</a>'
+DETAIL_PAGE_LIST_REGEX = '<div class="checklist small"><ul>(.*?)</ul></div>'
+
+with urllib.request.urlopen(URL) as response:
+    html = response.read().decode()
+matches = re.findall(REGEX, html)
+assert len(
+    matches
+) == 7, "did not found one entry for the last 7 days, found {}".format(
+    len(matches))
+news_last_7_days = []
+for url_part, link_text in matches:
+    link_text = link_text.split(": ")[-1].strip(" +")
+    news_last_7_days.append({
+        "link":
+        "https://www.tagesschau.de{}".format(url_part),
+        "text":
+        link_text
+    })
+
+with urllib.request.urlopen(URL) as response:
+    html = response.read().decode()
+
+#
+# parse single page entry
+#
+today = []
+link_today = news_last_7_days[0]["link"]
+with urllib.request.urlopen(link_today) as response:
+    html = response.read().decode()
+match, = re.findall(DETAIL_PAGE_LIST_REGEX, html)
+for headline in re.findall("<li>(.*?)</li>", match):
+    today.append({"link": link_today, "text": headline})
+
+data = {"last_7_days": news_last_7_days, "today": today}
+with open("build/tagesschau.json", "w") as f:
+    f.write(json.dumps(data, indent=2))
