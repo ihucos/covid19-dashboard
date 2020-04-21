@@ -25,3 +25,8 @@ watch:
 	    make; \
 	    inotifywait --exclude '/\.' -qqre close_write .; \
 	done
+
+.PHONY: open
+open:
+	xdg-open index.html
+

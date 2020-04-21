@@ -124,11 +124,22 @@ def age_gender():
 @export
 def deaths_all_countries():
     df = hopkins_series_deaths.copy()
-    #df.date = df.date.apply(lambda x: x.timestamp())
     df.date = df.date.dt.week
-    df = df.groupby(["country", "date"]).sum()
+    df = df[df.date != df.date.max()]
+    df = df.groupby(["country", "date"]).sum().reset_index().set_index('country')
+
+    df.value = df.value - df.value.groupby('country').shift(1, fill_value=0)
+
+    vals_by_country = {}
+    for country in df.index.unique():
+        vals_by_country[country] = [float(i) for i in df.value[df.index == country].to_list()]
+    return {
+        'labels': [str(i) for i in df.date.unique()],
+        'countries': vals_by_country
+    }
+
     # df.value = df.value.shift(1, fill_value=0) - df.value
-    return (df
-            .reset_index()
-            .rename({'value': 'y', 'date': 'x', 'country': 'label'}, axis=1)
-            .to_dict('records'))
+    #return (df
+    #        .reset_index()
+    #        .rename({'value': 'y', 'date': 'x', 'country': 'label'}, axis=1)
+    #        .to_dict('records'))

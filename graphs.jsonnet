@@ -255,13 +255,23 @@ local legend = { position: 'bottom', labels: { usePointStyle: 'true' }, align: '
     },
   },
   deaths_all_countries: {
-    type: 'scatter',
+    type: 'line',
     data: {
+        labels: data.deaths_all_countries.labels,
         datasets: [{
-            label: 'Scatter Dataset',
-            data: data.deaths_all_countries,
-        }]
+            label: country,
+            data: data.deaths_all_countries.countries[country],
+            order: self.data[std.length(self.data) - 1],
+        } for country in std.objectFields(data.deaths_all_countries.countries)]
     },
-}
+    options: {
+      legend: {display: false},
+      scales: {
+        yAxes: [{
+            stacked: true
+        }]
+      }
+    }
+  }
 
 }
