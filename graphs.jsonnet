@@ -254,4 +254,14 @@ local legend = { position: 'bottom', labels: { usePointStyle: 'true' }, align: '
       },
     },
   },
+  deaths_all_countries: {
+    type: 'scatter',
+    data: {
+        datasets: [{
+            label: 'Scatter Dataset',
+            data: data.deaths_all_countries,
+        }]
+    },
+}
+
 }

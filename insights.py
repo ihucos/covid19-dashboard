@@ -13,6 +13,10 @@ insights = {}
 def export(func):
     def inner():
         val = func()
+        if isinstance(val, pd.DataFrame):
+            return {
+                'index': val.index.tolist(),
+                **{k: val[k].tolist() for k in val.columns}}
         return val
 
     insights[func.__name__] = inner
@@ -22,6 +26,7 @@ def export(func):
 rki = pd.read_csv("build/rki.csv", index_col="date", parse_dates=True)
 rki_age = pd.read_csv("build/rki_age.csv", index_col="age")
 hopkins = pd.read_csv("build/hopkins.csv", index_col="country")
+hopkins_series_deaths = pd.read_csv("build/hopkins_series_deaths.csv", index_col="country", parse_dates=['date'])
 
 
 @export
@@ -115,3 +120,15 @@ def age_gender():
         "female": smooth_female.tolist(),
         "male": smooth_male.tolist(),
     }
+
+@export
+def deaths_all_countries():
+    df = hopkins_series_deaths.copy()
+    #df.date = df.date.apply(lambda x: x.timestamp())
+    df.date = df.date.dt.week
+    df = df.groupby(["country", "date"]).sum()
+    # df.value = df.value.shift(1, fill_value=0) - df.value
+    return (df
+            .reset_index()
+            .rename({'value': 'y', 'date': 'x', 'country': 'label'}, axis=1)
+            .to_dict('records'))
