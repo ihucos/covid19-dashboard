@@ -6,6 +6,8 @@ import jinja2
 from statsmodels.tsa.seasonal import seasonal_decompose
 import urllib.request
 import re
+import hashlib
+import random
 
 insights = {}
 
@@ -122,6 +124,15 @@ def age_gender():
     }
 
 
+def to_color(string):
+    rand = random.Random()
+    rand.seed(string)
+    r = rand.randint(0, 255)
+    g = rand.randint(0, 255)
+    b = rand.randint(0, 255)
+    return f'rgba({r}, {g}, {b}, 0.5)'
+
+
 @export
 def deaths_all_countries():
     df = hopkins_series_deaths.copy()
@@ -137,7 +148,7 @@ def deaths_all_countries():
 
     df.value = df.value - df.value.groupby('country').shift(1, fill_value=0)
 
-    cut = 30
+    cut = 10
     by_biggest = df.groupby('country').value.sum().sort_values(ascending=False)
     by_biggest.name = 'sum'
     top = by_biggest[:cut]
@@ -153,7 +164,11 @@ def deaths_all_countries():
 
     vals_by_country = {}
     for country in chart.index.unique():
-        vals_by_country[country] = [float(i) for i in chart.value[chart.index == country].to_list()]
+        vals_by_country.setdefault(country, {})
+        values = [float(i) for i in chart.value[chart.index == country].to_list()]
+        vals_by_country[country]['values'] = values
+        vals_by_country[country]['order'] = values[-1] if country != "Rest" else 0
+        vals_by_country[country]['color'] = to_color(country)
     return {
         'labels': [str(i) for i in chart.date.unique()],
         'countries': vals_by_country

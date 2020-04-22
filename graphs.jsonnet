@@ -6,6 +6,7 @@ local color_red = '#cb4b16';
 local color_blue = '#268bd2';
 local color_orange = 'orange';
 local legend = { position: 'bottom', labels: { usePointStyle: 'true' }, align: 'start' };
+local legend_reversed = { position: 'bottom', labels: { usePointStyle: 'true' }, align: 'start', 'reverse': true};
 
 {
   new_cases: {
@@ -261,21 +262,18 @@ local legend = { position: 'bottom', labels: { usePointStyle: 'true' }, align: '
     data: {
         labels: data.deaths_all_countries.labels,
         datasets: [{
-
-          backgroundColor: color_red,
-          borderColor: "white",
-          borderWidth: 1,
-          #pointBackgroundColor: "white",
-          #borderColor: "rgba(255, 255, 255, 0.3)",
-          pointBackgroundColor: "rgba(255, 255, 255, 0.3)",
-
+            backgroundColor: color_red,
+            //borderWidth: 4,
+            //pointRadius: 8,
             label: country,
-            data: data.deaths_all_countries.countries[country],
-            order: self.data[std.length(self.data) - 1],
+            pointBackgroundColor: self.borderColor,
+            borderColor: data.deaths_all_countries.countries[country].color,
+            data: data.deaths_all_countries.countries[country].values,
+            order: data.deaths_all_countries.countries[country].order,
         } for country in std.objectFields(data.deaths_all_countries.countries)]
     },
     options: {
-      legend: {display: false},
+      legend: legend_reversed,
       scales: {
         yAxes: [{
             stacked: true
