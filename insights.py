@@ -164,11 +164,12 @@ def deaths_all_countries():
 
     vals_by_country = {}
     for country in chart.index.unique():
-        vals_by_country.setdefault(country, {})
         values = [float(i) for i in chart.value[chart.index == country].to_list()]
-        vals_by_country[country]['values'] = values
-        vals_by_country[country]['order'] = values[-1] if country != "Rest" else 0
-        vals_by_country[country]['color'] = to_color(country)
+        vals_by_country[country] = {
+            'values': values,
+            'order': values[-1] if country != "Rest" else 0,
+            'color': to_color(country),
+        }
     return {
         'labels': [str(i) for i in chart.date.unique()],
         'countries': vals_by_country
