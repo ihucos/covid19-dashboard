@@ -115,3 +115,11 @@ def age_gender():
         "female": smooth_female.tolist(),
         "male": smooth_male.tolist(),
     }
+
+@export
+def stock_germany():
+    df = pd.read_csv("build/stock_germany.csv")
+    return {
+        'labels': df.Date.to_list(),
+        'value': df.Close.to_list()
+    }
