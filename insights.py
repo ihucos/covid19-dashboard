@@ -137,25 +137,27 @@ def deaths_all_countries():
 
     df.value = df.value - df.value.groupby('country').shift(1, fill_value=0)
 
-    big_deaths = df.groupby('country').sum() > 20_000
-    merged = pd.merge(df, big_deaths, right_index=True, left_on="country")
-    small_df = merged[merged.value_y == True][["date_x", "value_x"]]
-    small_df.columns = ["date", "value"]
-    df = small_df
+    cut = 30
+    by_biggest = df.groupby('country').value.sum().sort_values(ascending=False)
+    by_biggest.name = 'sum'
+    top = by_biggest[:cut]
+    bottom = by_biggest[cut:]
+
+
+    merged_top = df.merge(top, left_index=True, right_index=True)
+    merged_bottom = df.merge(bottom, left_index=True, right_index=True)
+    rest_countries = merged_bottom.groupby(['date']).sum().reset_index()
+    rest_countries.index = len(rest_countries.index) * ['Rest']
+    rest_countries.index.name = 'country'
+    chart = pd.concat([merged_top.reset_index(), rest_countries.reset_index()]).set_index('country')
 
     vals_by_country = {}
-    for country in df.index.unique():
-        vals_by_country[country] = [float(i) for i in df.value[df.index == country].to_list()]
+    for country in chart.index.unique():
+        vals_by_country[country] = [float(i) for i in chart.value[chart.index == country].to_list()]
     return {
-        'labels': [str(i) for i in df.date.unique()],
+        'labels': [str(i) for i in chart.date.unique()],
         'countries': vals_by_country
     }
-
-    # df.value = df.value.shift(1, fill_value=0) - df.value
-    #return (df
-    #        .reset_index()
-    #        .rename({'value': 'y', 'date': 'x', 'country': 'label'}, axis=1)
-    #        .to_dict('records'))
 
 
 @export
