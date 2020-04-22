@@ -4,12 +4,14 @@ import json
 import re
 
 URL = 'https://www.tagesschau.de/allemeldungen/'
-REGEX = '<a href="(/newsticker/liveblog-corona.*?)".*?>(.*?)</a>'
+REGEX = '<a href="(/newsticker/liveblog-coro.*?)".*?>(.*?)</a>'
 DETAIL_PAGE_LIST_REGEX = '<div class="checklist small"><ul>(.*?)</ul></div>'
 
 with urllib.request.urlopen(URL) as response:
     html = response.read().decode()
 matches = re.findall(REGEX, html)
+from pprint import pprint
+pprint(matches)
 assert len(
     matches
 ) == 7, "did not found one entry for the last 7 days, found {}".format(
