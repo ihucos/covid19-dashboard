@@ -186,8 +186,8 @@
             <div class="col">
                 <div class="card text-muted">
                     <div class="card-header">Über dieses Projekt</div>
-                    <div class="card-body" style="max-width: 50rem;">
-                        <p class="card-text">Die Seite
+                    <div class="card-body">
+                        <p class="card-text" style="max-width: 50rem;">Die Seite
                         <em>corona-aktuell.net</em> wird regelmäßig
                         aktualisiert und ist Open Source. Ziel ist es auf einem
                         Blick eine Situative Einschätzungen des Verlaufs von
@@ -197,7 +197,14 @@
                         href="https://github.com/ihucos/covid19-dashboard/">Github
                         Seite</a> dieses Projekts jederzeit willkommen.</p>
 
-                        <em>Letzte Aktualisierung {{ last_updated.strftime('am %d.%m.%Y um %H:%M Uhr') }}.</em>
+                        <p>
+                          <a href="https://travis-ci.com/github/ihucos/covid19-dashboard" target="_blank">
+                              <img src="https://travis-ci.com/ihucos/covid19-dashboard.svg?branch=master"></img>
+                          </a>
+                        </p>
+                        <p>
+                          <em>Letzte Aktualisierung {{ last_updated.strftime('am %d.%m.%Y um %H:%M Uhr') }}.</em>
+                        </p>
 
                     </div>
                 </div>
