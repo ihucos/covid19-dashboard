@@ -143,7 +143,6 @@ def deaths_all_countries():
     df.date = df.date.dt.week
     df = df[df.date != df.date.max()]
 
-
     df = df.groupby(["country", "date"]).sum().reset_index().set_index('country')
 
     df.value = df.value - df.value.groupby('country').shift(1, fill_value=0)
@@ -171,7 +170,7 @@ def deaths_all_countries():
             'color': to_color(country),
         }
     return {
-        'labels': [str(i) for i in chart.date.unique()],
+        'labels': [f'KW {i}' for i in chart.date.unique()],
         'countries': vals_by_country
     }
 
