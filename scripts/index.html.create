@@ -3,6 +3,10 @@ import subprocess
 import jinja2
 import sys
 import json
+import datetime
+import pytz
+
+last_updated = datetime.datetime.now(pytz.timezone('Europe/Berlin'))
 
 try:
     graphdata = subprocess.check_output(["jsonnet", "graphs.jsonnet"]).decode()
@@ -27,6 +31,7 @@ with open("build/tagesschau.json") as file_:
 
 index_html = template.render(
     graphdata=graphdata,
+    last_updated=last_updated,
     bootstrap_css=bootstrap_css,
     chart_js=chart_js,
     data=data,
