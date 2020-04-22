@@ -259,6 +259,14 @@ local legend = { position: 'bottom', labels: { usePointStyle: 'true' }, align: '
     data: {
         labels: data.deaths_all_countries.labels,
         datasets: [{
+
+          backgroundColor: color_red,
+          borderColor: "white",
+          borderWidth: 1,
+          #pointBackgroundColor: "white",
+          #borderColor: "rgba(255, 255, 255, 0.3)",
+          pointBackgroundColor: "rgba(255, 255, 255, 0.3)",
+
             label: country,
             data: data.deaths_all_countries.countries[country],
             order: self.data[std.length(self.data) - 1],

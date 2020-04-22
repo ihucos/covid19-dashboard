@@ -124,11 +124,23 @@ def age_gender():
 @export
 def deaths_all_countries():
     df = hopkins_series_deaths.copy()
+
+    #df.date = df.date.apply(str)
+
+    # group by week
     df.date = df.date.dt.week
     df = df[df.date != df.date.max()]
+
+
     df = df.groupby(["country", "date"]).sum().reset_index().set_index('country')
 
     df.value = df.value - df.value.groupby('country').shift(1, fill_value=0)
+
+    big_deaths = df.groupby('country').sum() > 20_000
+    merged = pd.merge(df, big_deaths, right_index=True, left_on="country")
+    small_df = merged[merged.value_y == True][["date_x", "value_x"]]
+    small_df.columns = ["date", "value"]
+    df = small_df
 
     vals_by_country = {}
     for country in df.index.unique():
