@@ -121,6 +121,7 @@ def age_gender():
         "male": smooth_male.tolist(),
     }
 
+
 @export
 def deaths_all_countries():
     df = hopkins_series_deaths.copy()
@@ -155,3 +156,12 @@ def deaths_all_countries():
     #        .reset_index()
     #        .rename({'value': 'y', 'date': 'x', 'country': 'label'}, axis=1)
     #        .to_dict('records'))
+
+
+@export
+def stock_germany():
+    df = pd.read_csv("build/stock_germany.csv")
+    return {
+        'labels': df.Date.to_list(),
+        'value': df.Close.to_list()
+    }

@@ -3,6 +3,7 @@ local data = import 'build/graphdata.jsonnet';
 local colors = ['#2aa198', '#95e1f4'];
 local color_green = '#859900';
 local color_red = '#cb4b16';
+local color_blue = '#268bd2';
 local color_orange = 'orange';
 local legend = { position: 'bottom', labels: { usePointStyle: 'true' }, align: 'start' };
 
@@ -254,6 +255,7 @@ local legend = { position: 'bottom', labels: { usePointStyle: 'true' }, align: '
       },
     },
   },
+
   deaths_all_countries: {
     type: 'line',
     data: {
@@ -280,6 +282,30 @@ local legend = { position: 'bottom', labels: { usePointStyle: 'true' }, align: '
         }]
       }
     }
-  }
+  },
 
+  stock_germany: {
+    type: 'line',
+    data: {
+      labels: data.stock_germany.labels,
+      datasets: [
+        {
+          data: data.stock_germany.value,
+          label: 'DAX',
+          backgroundColor: color_blue,
+          pointBackgroundColor: "rgba(0,0,0,0)",
+        },
+      ],
+    },
+    options: {
+      scales: {
+          yAxes: [{
+              ticks: {
+                  beginAtZero: true
+              }
+          }]
+      },
+      legend: {display: false},
+    },
+  },
 }
