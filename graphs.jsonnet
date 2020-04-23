@@ -210,6 +210,9 @@ local legend_reversed = { position: 'bottom', labels: { usePointStyle: 'true' },
       ],
     },
     options: {
+      tooltips: {
+          mode: 'index'
+      },
       legend: legend,
       scales: {
         xAxes: [
@@ -258,24 +261,28 @@ local legend_reversed = { position: 'bottom', labels: { usePointStyle: 'true' },
   },
 
   deaths_all_countries: {
-    type: 'line',
+    type: 'horizontalBar',
     data: {
         labels: data.deaths_all_countries.labels,
         datasets: [{
-            backgroundColor: color_red,
+            backgroundColor: data.deaths_all_countries.countries[country].color,
             //borderWidth: 4,
             //pointRadius: 8,
             label: country,
-            pointBackgroundColor: self.borderColor,
-            borderColor: data.deaths_all_countries.countries[country].color,
+            //pointBackgroundColor: self.borderColor,
+            //borderColor: data.deaths_all_countries.countries[country].color,
             data: data.deaths_all_countries.countries[country].values,
             order: data.deaths_all_countries.countries[country].order,
         } for country in std.objectFields(data.deaths_all_countries.countries)]
     },
     options: {
-      legend: legend_reversed,
+      tooltips: {mode: 'nearest'},
+      legend: {display: false},
       scales: {
         yAxes: [{
+            stacked: true
+        }],
+        xAxes: [{
             stacked: true
         }]
       }
