@@ -111,7 +111,7 @@ local legend_reversed = { position: 'bottom', labels: { usePointStyle: 'true' },
         'bis 34 Jahre',
         '35 bis 59 Jahre',
         '60 bis 79 Jahre',
-        'Ueber A80 Jahre',
+        'Über 80 Jahre',
       ],
       datasets: [
         {
