@@ -179,6 +179,45 @@
 
 
         <div class="row my-3">
+
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">Arbeitslosenquote <em style="display: block">In %</em></div>
+                    <div class="card-body">
+                              <h4>{{data.destatis_unemployment[1]}}</h4>
+                              Stand: <em>{{data.destatis_unemployment[0]}}</em>
+                    </div>
+
+                </div>
+
+                <div class="text-right text-muted small">
+                  <em>
+                      <a href="https://www.destatis.de/DE/Themen/Wirtschaft/Konjunkturindikatoren/Arbeitsmarkt/arb210a.html" target="_blank">
+                          Quelle:
+                     </a>
+                  Statistisches Bundesamt</em>
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">Verbraucherpreisindex
+                        <em style="display: block">vergleich Vorjahresmonat in %</em></div>
+                    <div class="card-body">
+                              <h4>{{data.destatis_consumer[1]}}</h4>
+                              Stand: <em>{{data.destatis_consumer[0]}}</em>
+                    </div>
+                </div>
+                <div class="text-right text-muted small">
+                  <em>
+                      <a href="https://www.destatis.de/DE/Themen/Wirtschaft/Konjunkturindikatoren/Basisdaten/vpi001j.html" target="_blank">
+                          Quelle:
+                     </a>
+                  Statistisches Bundesamt</em>
+                </div>
+            </div>
+
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-header">Börse - DAX</div>
@@ -187,39 +226,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="col-md-8">
-              <div class="card-group">
-                <div class="card">
-                    <div class="card-header">Arbeitslosenquote <em style="display: block">In %</em></div>
-                    <div class="card-body">
-                              <h4>{{data.destatis_unemployment[1]}}</h4>
-                              Stand: <em>{{data.destatis_unemployment[0]}}</em>
-                    </div>
-
-                    <em class="text-right px-1">
-                    <a href="https://www.destatis.de/DE/Themen/Wirtschaft/Konjunkturindikatoren/Arbeitsmarkt/arb210a.html" target="_blank">
-                    Link
-                    </a>
-                    </em>
-
-                </div>
-                <div class="card">
-                    <div class="card-header">Verbraucherpreisindex
-                        <em style="display: block">vergleich Vorjahresmonat in %</em></div>
-                    <div class="card-body">
-                              <h4>{{data.destatis_consumer[1]}}</h4>
-                              Stand: <em>{{data.destatis_consumer[0]}}</em>
-                    </div>
-                    <em class="text-right px-1">
-                    <a href="https://www.destatis.de/DE/Themen/Wirtschaft/Konjunkturindikatoren/Basisdaten/vpi001j.html" target="_blank">
-                    Link
-                    </a>
-                    </em>
-                </div>
-            </div>
-            <div class="text-right text-muted"><em>Quelle: Statistisches Bundesamt</em></div>
-          </div>
         </div>
 
 
