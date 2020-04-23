@@ -6,6 +6,7 @@ local color_red = '#cb4b16';
 local color_blue = '#268bd2';
 local color_orange = 'orange';
 local legend = { position: 'bottom', labels: { usePointStyle: 'true' }, align: 'start' };
+local legend_reversed = { position: 'bottom', labels: { usePointStyle: 'true' }, align: 'start', 'reverse': true};
 
 {
   new_cases: {
@@ -209,6 +210,9 @@ local legend = { position: 'bottom', labels: { usePointStyle: 'true' }, align: '
       ],
     },
     options: {
+      tooltips: {
+          mode: 'index'
+      },
       legend: legend,
       scales: {
         xAxes: [
@@ -255,6 +259,50 @@ local legend = { position: 'bottom', labels: { usePointStyle: 'true' }, align: '
       },
     },
   },
+
+  deaths_all_countries: {
+    type: 'horizontalBar',
+    data: {
+        labels: data.deaths_all_countries.labels,
+        datasets: [{
+            backgroundColor: data.deaths_all_countries.countries[country].color,
+            //borderWidth: 4,
+            //pointRadius: 8,
+            label: country,
+            //pointBackgroundColor: self.borderColor,
+            //borderColor: data.deaths_all_countries.countries[country].color,
+            data: data.deaths_all_countries.countries[country].values,
+            order: data.deaths_all_countries.countries[country].order,
+        } for country in std.objectFields(data.deaths_all_countries.countries)]
+    },
+    options: {
+      tooltips: {mode: 'nearest'},
+      legend: {display: false},
+      scales: {
+        yAxes: [{
+            stacked: true,
+            gridLines: {
+              display: false,
+            },
+            scaleLabel: {
+              display: true,
+              labelString: 'Kalenderwoche',
+           },
+        }],
+        xAxes: [{
+            stacked: true,
+            gridLines: {
+              display: false,
+            },
+            scaleLabel: {
+              display: true,
+              labelString: 'Todesfälle',
+           },
+        }]
+      }
+    }
+  },
+
   stock_germany: {
     type: 'line',
     data: {

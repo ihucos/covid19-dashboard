@@ -6,6 +6,8 @@ import jinja2
 from statsmodels.tsa.seasonal import seasonal_decompose
 import urllib.request
 import re
+import hashlib
+import random
 
 insights = {}
 
@@ -13,6 +15,10 @@ insights = {}
 def export(func):
     def inner():
         val = func()
+        if isinstance(val, pd.DataFrame):
+            return {
+                'index': val.index.tolist(),
+                **{k: val[k].tolist() for k in val.columns}}
         return val
 
     insights[func.__name__] = inner
@@ -22,6 +28,7 @@ def export(func):
 rki = pd.read_csv("build/rki.csv", index_col="date", parse_dates=True)
 rki_age = pd.read_csv("build/rki_age.csv", index_col="age")
 hopkins = pd.read_csv("build/hopkins.csv", index_col="country")
+hopkins_series_deaths = pd.read_csv("build/hopkins_series_deaths.csv", index_col="country", parse_dates=['date'])
 
 
 @export
@@ -115,6 +122,69 @@ def age_gender():
         "female": smooth_female.tolist(),
         "male": smooth_male.tolist(),
     }
+
+
+def to_color(string):
+    rand = random.Random()
+    rand.seed(string)
+    r = rand.randint(0, 255)
+    g = rand.randint(0, 255)
+    b = rand.randint(0, 255)
+    return f'rgba({r}, {g}, {b}, 1)'
+
+
+@export
+def deaths_all_countries():
+    num_show_in_graphs = 100000
+    rest_label = "Restliche Länder"
+
+    df = hopkins_series_deaths.copy()
+
+    df = df.sort_values(['country', 'date'])
+
+    # undo the accumulative sum - we want reported cases per date
+    df.value = df.value - df.groupby('country').value.shift(1, fill_value=0)
+
+    # in Iceland there was one bogus entry with 4 deaths that we intent to
+    # ignore with this line
+    df.value = df.value.clip(0)
+
+    # group by week
+    df.date = df.date.dt.week
+
+    # the last week is not complete
+    df = df[df.date != df.date.max()]
+
+    df = df.groupby(["country", "date"]).sum().reset_index().set_index('country')
+
+    # how many countries to sho in the graph
+
+    by_biggest = df.groupby('country').value.sum().sort_values(ascending=False)
+    by_biggest.name = 'sum'
+    top = by_biggest[:num_show_in_graphs]
+    bottom = by_biggest[num_show_in_graphs:]
+
+
+    merged_top = df.merge(top, left_index=True, right_index=True)
+    merged_bottom = df.merge(bottom, left_index=True, right_index=True)
+    rest_countries = merged_bottom.groupby(['date']).sum().reset_index()
+    rest_countries.index = len(rest_countries.index) * [rest_label]
+    rest_countries.index.name = 'country'
+    chart = pd.concat([merged_top.reset_index(), rest_countries.reset_index()]).set_index('country')
+
+    vals_by_country = {}
+    for country in chart.index.unique():
+        values = [float(i) for i in chart.value[chart.index == country].to_list()]
+        vals_by_country[country] = {
+            'values': values,
+            'order': values[-1] if country != rest_label else 0,
+            'color': to_color(country),
+        }
+    return {
+        'labels': [f'KW {i}' for i in chart.date.unique()],
+        'countries': vals_by_country
+    }
+
 
 @export
 def stock_germany():
