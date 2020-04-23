@@ -194,3 +194,12 @@ def stock_germany():
         'labels': df.Date.to_list(),
         'value': df.Close.to_list()
     }
+
+@export
+def destatis_consumer():
+    return open('build/destatis_consumer.txt').readlines()
+
+@export
+def destatis_unemployment():
+    return open('build/destatis_unemployment.txt').readlines()
+
