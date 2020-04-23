@@ -285,7 +285,7 @@ local legend_reversed = { position: 'bottom', labels: { usePointStyle: 'true' },
             },
             stacked: true,
             gridLines: {
-              display: false,
+              //display: false,
             },
             scaleLabel: {
               display: true,
@@ -295,7 +295,7 @@ local legend_reversed = { position: 'bottom', labels: { usePointStyle: 'true' },
         xAxes: [{
             stacked: true,
             gridLines: {
-              display: false,
+              //display: false,
             },
             scaleLabel: {
               display: true,
