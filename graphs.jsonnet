@@ -281,12 +281,23 @@ local legend_reversed = { position: 'bottom', labels: { usePointStyle: 'true' },
       scales: {
         yAxes: [{
             stacked: true,
+            gridLines: {
+              display: false,
+            },
+            scaleLabel: {
+              display: true,
+              labelString: 'Kalenderwoche',
+           },
         }],
         xAxes: [{
             stacked: true,
-              ticks: {
-                  beginAtZero: true
-              }
+            gridLines: {
+              display: false,
+            },
+            scaleLabel: {
+              display: true,
+              labelString: 'Todesfälle',
+           },
         }]
       }
     }

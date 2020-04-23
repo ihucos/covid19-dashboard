@@ -165,11 +165,12 @@
         <div class="row my-3">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Todesfälle alle Länder pro Kalenderwoche</div>
+                    <div class="card-header">Todesfälle alle Länder pro Kalenderwoche - Gruppiert nach Land</div>
                     <div class="card-body">
                         <canvas id="deaths_all_countries" height=150></canvas>
                     </div>
                 </div>
+            <div class="text-right text-muted"><em>Quelle: Johns Hopkins University</em></div>
             </div>
         </div>
 
@@ -251,7 +252,7 @@
                           </a>
                         </p>
                         <p>
-                          <em>Letzte Aktualisierung am 23.04.2020 um 12:09 Uhr.</em>
+                          <em>Letzte Aktualisierung am 23.04.2020 um 13:15 Uhr.</em>
                         </p>
 
                     </div>
@@ -4392,14 +4393,25 @@
          "scales": {
             "xAxes": [
                {
-                  "stacked": true,
-                  "ticks": {
-                     "beginAtZero": true
-                  }
+                  "gridLines": {
+                     "display": false
+                  },
+                  "scaleLabel": {
+                     "display": true,
+                     "labelString": "Todesfälle"
+                  },
+                  "stacked": true
                }
             ],
             "yAxes": [
                {
+                  "gridLines": {
+                     "display": false
+                  },
+                  "scaleLabel": {
+                     "display": true,
+                     "labelString": "Kalenderwoche"
+                  },
                   "stacked": true
                }
             ]
