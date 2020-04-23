@@ -266,6 +266,7 @@ local legend_reversed = { position: 'bottom', labels: { usePointStyle: 'true' },
         labels: data.deaths_all_countries.labels,
         datasets: [{
             backgroundColor: data.deaths_all_countries.countries[country].color,
+            hoverBackgroundColor: self.backgroundColor,
             //borderWidth: 4,
             //pointRadius: 8,
             label: country,

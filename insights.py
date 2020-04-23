@@ -127,9 +127,17 @@ def age_gender():
 def to_color(string):
     rand = random.Random()
     rand.seed(string)
+
+    target = 100
     r = rand.randint(0, 255)
     g = rand.randint(0, 255)
     b = rand.randint(0, 255)
+
+    ratio = 255 / max([r, g, b]) 
+    r *= ratio
+    g *= ratio
+    b *= ratio
+
     return f'rgba({r}, {g}, {b}, 1)'
 
 
