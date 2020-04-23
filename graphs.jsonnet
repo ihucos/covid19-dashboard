@@ -280,10 +280,13 @@ local legend_reversed = { position: 'bottom', labels: { usePointStyle: 'true' },
       legend: {display: false},
       scales: {
         yAxes: [{
-            stacked: true
+            stacked: true,
         }],
         xAxes: [{
-            stacked: true
+            stacked: true,
+              ticks: {
+                  beginAtZero: true
+              }
         }]
       }
     }

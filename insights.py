@@ -145,6 +145,10 @@ def deaths_all_countries():
     # undo the accumulative sum - we want reported cases per date
     df.value = df.value - df.groupby('country').value.shift(1, fill_value=0)
 
+    # in Iceland there was one bogus entry with 4 deaths that we intent to
+    # ignore with this line
+    df.value = df.value.clip(0)
+
     # group by week
     df.date = df.date.dt.week
 
