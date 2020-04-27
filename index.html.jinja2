@@ -148,7 +148,7 @@
         </div>
 
         <div class="row my-3">
-            <div class="col-md-4">
+            <div class="col-sm-4">
                 <div class="card">
                     <div class="card-header">Todesfall vs Gesamt Infiziert</div>
                     <div class="card-body">
@@ -157,7 +157,7 @@
                 </div>
                <div class="text-right small text-muted"><em>Quelle: Robert Koch-Institut</em></div>
             </div>
-            <div class="col-md-4">
+            <div class="col-sm-4">
                 <div class="card">
                     <div class="card-header">Todesfall Mann vs Todesfall Frau</div>
                     <div class="card-body">
@@ -180,7 +180,7 @@
 
         <div class="row my-3">
 
-            <div class="col-md-4">
+            <div class="col-sm-4">
                 <div class="card">
                     <div class="card-header">Verbraucherpreisindex
                         <em style="display: block">Vergleich Vorjahresmonat in %</em></div>
@@ -201,7 +201,7 @@
             </div>
 
 
-            <div class="col-md-4">
+            <div class="col-sm-4">
                 <div class="card">
                     <div class="card-header">Arbeitslosenquote <em style="display: block">In %</em></div>
                     <div class="card-body">
@@ -272,6 +272,9 @@
             if (data.hasOwnProperty(id)) {
                 var el = document.getElementById(id)
                 if (el){
+                    if (document.body.clientWidth <= 640) {
+                        el.height = 320;
+                    }
                     new Chart(el, data[id]);
                 }
             }
