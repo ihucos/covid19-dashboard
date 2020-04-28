@@ -271,18 +271,18 @@
                   {% set url = 'https://corona-aktuell.net/' %}
                   <ul class="list-group">
                     <li class="list-group-item">
-                       <a href="https://twitter.com/intent/tweet?text={{text + ' - ' + url | urlencode}}">
+                       <a class="stretched-link" href="https://twitter.com/intent/tweet?text={{text + ' - ' + url | urlencode}}">
                            Twitter
                        </a>
                     </li>
                     <li class="list-group-item">
-                       <a href="https://www.facebook.com/sharer/sharer.php?u={{ url | urlencode }}&quote={{ text | urlencode }}">
+                       <a class="stretched-link" href="https://www.facebook.com/sharer/sharer.php?u={{ url | urlencode }}&quote={{ text | urlencode }}">
                            Facebook
                        </a>
                     </li>
                     <li class="list-group-item">
                     
-                       <a href="whatsapp://send?text={{text + ' - ' + url | urlencode}}" data-action="share/whatsapp/share">
+                       <a class="stretched-link" href="whatsapp://send?text={{text + ' - ' + url | urlencode}}" data-action="share/whatsapp/share">
                          Whatsapp <span class="text-muted">(Für Handy)</span>
                        </a>
                     </li>
