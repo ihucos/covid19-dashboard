@@ -202,4 +202,3 @@ def destatis_consumer():
 @export
 def destatis_unemployment():
     return open('build/destatis_unemployment.txt').readlines()
-

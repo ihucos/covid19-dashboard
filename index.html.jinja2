@@ -14,6 +14,7 @@
       {{ chart_js }}
     </script>
 
+    <meta name="description" content="Ein Aktueller Grafischer Überblick rund um Corona"> 
     <title>Covid-19 In Deutschland</title>
 </head>
 
@@ -236,8 +237,8 @@
 
 
         <div class="row my-4">
-            <div class="col">
-                <div class="card text-muted">
+              <div class="col-md-8">
+                <div class="card text-muted" style="flex-grow: 2">
                     <div class="card-header">Über dieses Projekt</div>
                     <div class="card-body">
                         <p class="card-text" style="max-width: 50rem;">Die Seite
@@ -261,7 +262,34 @@
 
                     </div>
                 </div>
-            </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="card">
+                  <div class="card-header">Weitersagen</div>
+                  {% set text = 'Schnell über Corona bescheidwissen' %}
+                  {% set url = 'https://corona-aktuell.net/' %}
+                  <ul class="list-group">
+                    <li class="list-group-item">
+                       <a href="https://twitter.com/intent/tweet?text={{text + ' - ' + url | urlencode}}">
+                           Twitter
+                       </a>
+                    </li>
+                    <li class="list-group-item">
+                       <a href="https://www.facebook.com/sharer/sharer.php?u={{ url | urlencode }}&quote={{ text | urlencode }}">
+                           Facebook
+                       </a>
+                    </li>
+                    <li class="list-group-item">
+                    
+                       <a href="whatsapp://send?text={{text + ' - ' + url | urlencode}}" data-action="share/whatsapp/share">
+                         Whatsapp <span class="text-muted">(Für Handy)</span>
+                       </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
         </div>
 
     </div>
