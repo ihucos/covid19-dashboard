@@ -37,10 +37,14 @@ for entry in summary:
     link_today = entry["link"]
     with urllib.request.urlopen(link_today) as response:
         html = response.read().decode()
-    match, = re.findall(DETAIL_PAGE_LIST_REGEX, html)
-    for headline in re.findall("<li>(.*?)</li>", match):
-        this_day.append({"link": link_today, "text": headline})
-    last_days.append(this_day)
+    try:
+        match, = re.findall(DETAIL_PAGE_LIST_REGEX, html)
+    except ValueError:
+        last_days.append([])
+    else:
+        for headline in re.findall("<li>(.*?)</li>", match):
+            this_day.append({"link": link_today, "text": headline})
+        last_days.append(this_day)
 
 data = {"summary": summary, "last_days": last_days}
 with open("build/tagesschau.json", "w") as f:
