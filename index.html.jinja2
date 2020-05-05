@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <style>
+
+    <style>
       {{ bootstrap_css }}
     </style>
 
@@ -236,8 +238,8 @@
         </div>
 
 
-        <div class="row my-4">
-              <div class="col-md-8">
+        <div class="row my-4" style="margin-top: 6rem !important;">
+              <div class="col-md-4">
                 <div class="card text-muted" style="flex-grow: 2">
                     <div class="card-header">Über dieses Projekt</div>
                     <div class="card-body">
@@ -245,9 +247,7 @@
                         <em>corona-aktuell.net</em> wird regelmäßig
                         aktualisiert und ist Open Source. Ziel ist es auf einem
                         Blick eine Situative Einschätzungen des Verlaufs von
-                        Covid-19 zu erlangen. Die Daten werden von folgenden
-                        Quellen bezogen: Robert Koch-Institut und Johns Hopkins
-                        University, Tagesschau, Statistisches Bundesamt. Mitarbeit in der <a
+                        Covid-19 zu erlangen. Mitarbeit in der <a
                         href="https://github.com/ihucos/covid19-dashboard/">Github
                         Seite</a> dieses Projekts jederzeit willkommen.</p>
 
@@ -262,6 +262,15 @@
 
                     </div>
                 </div>
+              </div>
+
+              <div class="col-md-4">
+                  <div class="card">
+                      <div class="card-header">Seitenaufrufe</div>
+                      <div class="card-body">
+                          <canvas id="website_hits"></canvas>
+                      </div>
+                  </div>
               </div>
 
               <div class="col-md-4">

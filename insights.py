@@ -196,6 +196,14 @@ def stock_germany():
     }
 
 @export
+def website_hits():
+    df = pd.read_csv("build/website_hits.csv")
+    return {
+        'labels': df.date.to_list(),
+        'value': df.views.to_list()
+    }
+
+@export
 def destatis_consumer():
     return open('build/destatis_consumer.txt').readlines()
 

@@ -334,4 +334,30 @@ local legend_reversed = { position: 'bottom', labels: { usePointStyle: 'true' },
       legend: {display: false},
     },
   },
+
+  website_hits: {
+    type: 'bar',
+    data: {
+      labels: data.website_hits.labels,
+      datasets: [
+        {
+          data: data.website_hits.value,
+          label: 'Besuche',
+          backgroundColor: color_blue,
+          pointBackgroundColor: "rgba(0,0,0,0)",
+        },
+      ],
+    },
+    options: {
+      scales: {
+          yAxes: [{
+              ticks: {
+                  beginAtZero: true,
+                  stepSize: 1,
+              }
+          }]
+      },
+      legend: {display: false},
+    },
+  },
 }
