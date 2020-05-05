@@ -342,7 +342,7 @@ local legend_reversed = { position: 'bottom', labels: { usePointStyle: 'true' },
       datasets: [
         {
           data: data.website_hits.value,
-          label: 'Besuche',
+          label: 'Seitenaufrufe',
           backgroundColor: color_blue,
           pointBackgroundColor: "rgba(0,0,0,0)",
         },
