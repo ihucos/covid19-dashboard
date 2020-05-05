@@ -16,6 +16,12 @@
       {{ chart_js }}
     </script>
 
+    <script>
+    if (window.location.protocol != 'file:'){
+      fetch('https://poormans-analytics.herokuapp.com/increment/')
+    }
+    </script>
+
     <meta name="description" content="Ein Aktueller Grafischer Überblick rund um Corona"> 
     <title>Covid-19 In Deutschland</title>
 </head>

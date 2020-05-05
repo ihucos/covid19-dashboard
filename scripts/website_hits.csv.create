@@ -1,0 +1,4 @@
+#!/usr/bin/env python3
+import pandas as pd
+df = pd.read_csv("https://poormans-analytics.herokuapp.com/fetch/", names=["date", "views"])
+df.to_csv("build/website_hits.csv", index=False)
