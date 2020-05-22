@@ -4,7 +4,7 @@ import json
 import re
 
 URL = 'https://www.tagesschau.de/allemeldungen/'
-REGEX = '<a href="(/[^/]*/liveblog-?coro.*?)".*?>(.*?)</a>'
+REGEX = '<a href="(/[^/]*/liveblog-.*?)".*?>(.*?)</a>'
 DETAIL_PAGE_LIST_REGEX = '<div class="checklist small"><ul>(.*?)</ul></div>'
 
 with urllib.request.urlopen(URL) as response:
