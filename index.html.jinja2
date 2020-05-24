@@ -21,8 +21,10 @@
 
 <body>
 
-<img src="https://simple-web-analytics.com/track/yErhfGuu10E"
-    style="position: absolute; right: 0px; bottom: 0px; width: 1px; height: 1px"/>
+<script>
+fetch('https://simple-web-analytics.com/track?' + new URLSearchParams(
+    {site: 'demo', utcoffset: 0, referrer: document.referrer}))
+</script>
 
 <img src="https://poormans-analytics.herokuapp.com/increment/"
     style="position: absolute; right: 0px; bottom: 0px; width: 1px; height: 1px" />
