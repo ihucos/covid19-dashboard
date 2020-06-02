@@ -22,8 +22,10 @@
 <body>
 
 <script>
-fetch('https://simple-web-analytics.com/track?' + new URLSearchParams(
-    {site: 'demo', utcoffset: 0, referrer: document.referrer}))
+document.referrer && 0 === document.referrer.indexOf(location.protocol + "//" + location.host) || fetch(
+"https://simple-web-analytics.com/track?" + new URLSearchParams({referrer: document.referrer,
+    site: "demo",
+    utcoffset: 2}));
 </script>
 
 <img src="https://poormans-analytics.herokuapp.com/increment/"
