@@ -2,50 +2,41 @@
 import urllib.request
 import json
 import re
+from pprint import pprint
 
 URL = 'https://www.tagesschau.de/allemeldungen/'
-REGEX = '<a href="(/[^/]*/liveblog-.*?)".*?>(.*?)</a>'
+REGEX = '<a href="(/[^/]*/liveblog-.*?(?:montag|dienstag|mittwoch|donnerstag|freitag|samstag|sonntag).*?)".*?>(.*?)</a>'
 DETAIL_PAGE_LIST_REGEX = '<div class="checklist small"><ul>(.*?)</ul></div>'
 
-with urllib.request.urlopen(URL) as response:
-    html = response.read().decode()
-matches = re.findall(REGEX, html)
-assert len(
-    matches
-) == 7, "did not found one entry for the last 7 days, found {}".format(
-    len(matches))
-summary = []
-for url_part, link_text in matches:
-    link_text = link_text.split(": ")[-1].strip(" +")
-    summary.append({
-        "link":
-        "https://www.tagesschau.de{}".format(url_part),
-        "text":
-        link_text
-    })
-
-with urllib.request.urlopen(URL) as response:
-    html = response.read().decode()
-
-#
-# parse single page entry
-#
-
-last_days = []
-for entry in summary:
+def get_bullet_points(url):
     this_day = []
-    link_today = entry["link"]
-    with urllib.request.urlopen(link_today) as response:
+    with urllib.request.urlopen(url) as response:
         html = response.read().decode()
     try:
         match, = re.findall(DETAIL_PAGE_LIST_REGEX, html)
     except ValueError:
-        last_days.append([])
+        pass
     else:
         for headline in re.findall("<li>(.*?)</li>", match):
-            this_day.append({"link": link_today, "text": headline})
-        last_days.append(this_day)
+            yield headline
 
-data = {"summary": summary, "last_days": last_days}
+with urllib.request.urlopen(URL) as response:
+    html = response.read().decode()
+matches = re.findall(REGEX, html)
+
+entries = []
+for url_part, link_text in matches:
+    link_text = link_text.split(": ")[-1].strip(" +")
+    link = "https://www.tagesschau.de{}".format(url_part)
+    text = link_text
+    points = list(get_bullet_points(link))
+    if points:
+        entries.append({'link': link, 'summary': text, 'points': points})
+
+assert len(
+    entries
+) == 7, "did not found one entry for the last 7 days, found {}".format(
+    len(entries))
+
 with open("build/tagesschau.json", "w") as f:
-    f.write(json.dumps(data, indent=2))
+    f.write(json.dumps(entries, indent=2))

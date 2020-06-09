@@ -58,8 +58,8 @@ document.referrer && 0 === document.referrer.indexOf(location.protocol + "//" + 
                         <div class="card-header">Heute</div>
                           <div class="card-body">
                           <ul>
-                          {% for item in tagesschau.last_days[0] %}
-                          <li class="small"><a class="text-dark" href="{{item.link}}" target="_blank">{{item.text}}</a></li>
+                          {% for item in tagesschau[0].points %}
+                          <li class="small"><a class="text-dark" href="{{tagesschau[0].link}}" target="_blank">{{item}}</a></li>
                           {% endfor %}
                           </ul>
                           </div>
@@ -69,8 +69,8 @@ document.referrer && 0 === document.referrer.indexOf(location.protocol + "//" + 
                         <div class="card-header">Gestern</div>
                           <div class="card-body">
                           <ul>
-                          {% for item in tagesschau.last_days[1] %}
-                          <li class="small"><a class="text-dark" href="{{item.link}}" target="_blank">{{item.text}}</a></li>
+                          {% for item in tagesschau[1].points %}
+                          <li class="small"><a class="text-dark" href="{{tagesschau[1].link}}" target="_blank">{{item}}</a></li>
                           {% endfor %}
                           </ul>
                           </div>
@@ -80,8 +80,8 @@ document.referrer && 0 === document.referrer.indexOf(location.protocol + "//" + 
                         <div class="card-header">Letzte 7 Tage</div>
                           <div class="card-body">
                           <ol>
-                          {% for item in tagesschau.summary %}
-                          <li class="small"><a class="text-dark" href="{{item.link}}" target="_blank">{{item.text}}</a></li>
+                          {% for item in tagesschau %}
+                          <li class="small"><a class="text-dark" href="{{item.link}}" target="_blank">{{item.summary}}</a></li>
                           {% endfor %}
                           </ol>
                           </div>
