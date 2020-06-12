@@ -5,7 +5,7 @@ import re
 from pprint import pprint
 
 URL = 'https://www.tagesschau.de/allemeldungen/'
-REGEX = '<a href="(/[^/]*/liveblog-.*?(?:montag|dienstag|mittwoch|donnerstag|freitag|samstag|sonntag).*?)".*?>(.*?)</a>'
+REGEX = '<a href="(/[^/]*/liveblog-.*?(?:montag|dienstag|mittwoch|donnerstag|freitag|samstag|sonntag|corona).*?)".*?>(.*?)</a>'
 DETAIL_PAGE_LIST_REGEX = '<div class="checklist small"><ul>(.*?)</ul></div>'
 
 def get_bullet_points(url):
@@ -33,6 +33,7 @@ for url_part, link_text in matches:
     if points:
         entries.append({'link': link, 'summary': text, 'points': points})
 
+#pprint(entries)
 assert len(
     entries
 ) == 7, "did not found one entry for the last 7 days, found {}".format(
