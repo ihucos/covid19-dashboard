@@ -21,7 +21,17 @@
 
 <body>
 
-<script>sessionStorage.getItem("_swa")||0===document.referrer.indexOf(location.protocol+"//"+location.host)||fetch("https://simple-web-analytics.com/track?"+new URLSearchParams({referrer:document.referrer,site:"test",utcoffset:9})),sessionStorage.setItem("_swa","1");</script>
+<script>
+// Simple Web Analytics tracking code
+if (!sessionStorage.getItem("_swa") && document.referrer.indexOf(location.protocol + "//" + location.host) !== 0) {
+    fetch("https://simple-web-analytics.com/track?" + new URLSearchParams({
+        referrer: document.referrer,
+        site: "demo",
+        utcoffset: 2
+    }));
+}
+sessionStorage.setItem("_swa", "1");
+</script>
 
 <img src="https://poormans-analytics.herokuapp.com/increment/"
     style="position: absolute; right: 0px; bottom: 0px; width: 1px; height: 1px" />
