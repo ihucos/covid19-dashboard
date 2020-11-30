@@ -1,0 +1,17 @@
+#!/usr/bin/env python3
+import pandas as pd
+
+CSV_URL = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv'
+
+df = pd.read_csv(CSV_URL)
+
+df = (df
+.rename(columns={"Country/Region": "country"})
+.drop(["Lat", "Long"], axis=1)
+.groupby("country")
+.sum())
+
+df = df.reset_index().melt(id_vars="country", var_name="date").set_index("country")
+
+df.date = pd.to_datetime(df.date)
+df.to_csv("build/hopkins_series_deaths.csv")

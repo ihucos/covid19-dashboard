@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+    <style>
+      {{ bootstrap_css }}
+    </style>
+
+    <script>
+      {{ chart_js }}
+    </script>
+
+    <meta name="description" content="Ein Aktueller Grafischer Überblick rund um Corona"> 
+    <title>Covid-19 In Deutschland</title>
+</head>
+
+<body>
+
+<script>
+// Simple Web Analytics tracking code
+if (!sessionStorage.getItem("_swa") && document.referrer.indexOf(location.protocol + "//" + location.host) !== 0) {
+    fetch("https://simple-web-analytics.com/track?" + new URLSearchParams({
+        referrer: document.referrer,
+        site: "demo",
+        utcoffset: 2
+    }));
+}
+sessionStorage.setItem("_swa", "1");
+</script>
+
+<img src="https://poormans-analytics.herokuapp.com/increment/"
+    style="position: absolute; right: 0px; bottom: 0px; width: 1px; height: 1px" />
+
+    <div class="container">
+
+        <div class="row my-3">
+            <div class="col">
+                <h1>Corona und Aktuelles</h1>
+            </div>
+        </div>
+
+        <div class="row my-3">
+            <div class="col-md-12">
+                <div class="card">
+                        <div class="card-header">Neugemeldete Fälle pro Tag</div>
+                    <div class="card-body">
+                        <canvas id="new_cases" height="150"></canvas>
+                    </div>
+                </div>
+            <div class="text-right text-muted"><em>Quelle: Robert Koch-Institut</em></div>
+            </div>
+        </div>
+
+        <div class="row my-3">
+            <div class="col-md-12">
+              <div class="card-group">
+                <div class="card">
+                        <div class="card-header">Heute</div>
+                          <div class="card-body">
+                          <ul>
+                          {% for item in tagesschau[0].points %}
+                          <li class="small"><a class="text-dark" href="{{tagesschau[0].link}}" target="_blank">{{item}}</a></li>
+                          {% endfor %}
+                          </ul>
+                          </div>
+                </div>
+
+                <div class="card">
+                        <div class="card-header">Gestern</div>
+                          <div class="card-body">
+                          <ul>
+                          {% for item in tagesschau[1].points %}
+                          <li class="small"><a class="text-dark" href="{{tagesschau[1].link}}" target="_blank">{{item}}</a></li>
+                          {% endfor %}
+                          </ul>
+                          </div>
+                </div>
+
+                <div class="card">
+                        <div class="card-header">Letzte 7 Tage</div>
+                          <div class="card-body">
+                          <ol>
+                          {% for item in tagesschau %}
+                          <li class="small"><a class="text-dark" href="{{item.link}}" target="_blank">{{item.summary}}</a></li>
+                          {% endfor %}
+                          </ol>
+                          </div>
+                </div>
+              </div>
+              <div class="text-right text-muted"><em>Quelle: Tagesschau. Stand: {{ last_updated.strftime('%d.%m.%Y') }}.</em>
+              </em></div>
+            </div>
+        </div>
+
+
+
+        <div class="row my-3">
+            <div class="col-md-12">
+                <div class="card-group">
+                <div class="card" style="flex-grow: 2">
+                    <div class="card-header">Übersicht andere Länder</div>
+                    <div class="card-body">
+                        <canvas id="countries" height=100></canvas>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">Welt Gesamt</div>
+                    <div class="card-body">
+  <table class="table table-borderless">
+    <tbody>
+      <tr>
+        <th>Gerade Infiziert</th>
+        <td>{{ "{:,}".format(data.world_stat.active)  }}</td>
+      </tr>
+      <tr>
+        <th>Gesamt Infiziert</th>
+        <td>{{ "{:,}".format(data.world_stat.infections)  }}</td>
+      </tr>
+      <tr>
+        <th>Wieder Gesund</th>
+        <td>{{ "{:,}".format(data.world_stat.recovered)  }}</td>
+      </tr>
+      <tr>
+        <th>Todesfall</th>
+        <td>{{ "{:,}".format(data.world_stat.deaths)  }}</td>
+      </tr>
+    </tbody>
+  </table>
+                    </div>
+                </div>
+            </div>
+            <div class="text-right text-muted"><em>Quelle: Johns Hopkins University</em></div>
+            </div>
+        </div>
+
+
+        <div class="row my-3">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">Todesfälle alle Länder pro Kalenderwoche - Gruppiert nach Land</div>
+                    <div class="card-body">
+                        <canvas id="deaths_all_countries" height=100></canvas>
+                    </div>
+                </div>
+            <div class="text-right text-muted"><em>Quelle: Johns Hopkins University</em></div>
+            </div>
+        </div>
+
+
+
+        <div class="row my-3">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">Todesfälle pro Bundesland</div>
+                    <div class="card-body">
+                        <canvas id="states" height="50"></canvas>
+                    </div>
+                </div>
+            <div class="text-right text-muted"><em>Quelle: Robert Koch-Institut</em></div>
+            </div>
+        </div>
+
+        <div class="row my-3">
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-header">Todesfall vs Gesamt Infiziert</div>
+                    <div class="card-body">
+                        <canvas id="deaths"></canvas>
+                    </div>
+                </div>
+               <div class="text-right small text-muted"><em>Quelle: Robert Koch-Institut</em></div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-header">Todesfall Mann vs Todesfall Frau</div>
+                    <div class="card-body">
+                        <canvas id="gender"></canvas>
+                    </div>
+                </div>
+               <div class="text-right small text-muted"><em>Quelle: Robert Koch-Institut</em></div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">Todesfall nach Altersgruppe</div>
+                    <div class="card-body">
+                        <canvas id="deaths_by_age"></canvas>
+                    </div>
+                </div>
+               <div class="text-right small text-muted"><em>Quelle: Robert Koch-Institut</em></div>
+            </div>
+        </div>
+
+
+        <div class="row my-3">
+
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-header">Verbraucherpreisindex
+                        <em style="display: block">Vergleich Vorjahresmonat in %</em></div>
+                    <div class="card-body">
+                              <h3>{{data.destatis_consumer[1]}}</h3>
+                              <div class="text-muted">
+                              Stand: <em>{{data.destatis_consumer[0]}}</em>
+                              </div>
+                    </div>
+                </div>
+                <div class="text-right text-muted small">
+                  <em>
+                      <a href="https://www.destatis.de/DE/Themen/Wirtschaft/Konjunkturindikatoren/Basisdaten/vpi001j.html" target="_blank">
+                          Quelle:
+                     </a>
+                  Statistisches Bundesamt</em>
+                </div>
+            </div>
+
+
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-header">Arbeitslosenquote <em style="display: block">In %</em></div>
+                    <div class="card-body">
+                              <h3>{{data.destatis_unemployment[1]}}</h3>
+                              <div class="text-muted">
+                              Stand: <em>{{data.destatis_unemployment[0]}}</em>
+                              </div>
+                    </div>
+
+                </div>
+
+                <div class="text-right text-muted small">
+                  <em>
+                      <a href="https://www.destatis.de/DE/Themen/Wirtschaft/Konjunkturindikatoren/Arbeitsmarkt/arb210a.html" target="_blank">
+                          Quelle:
+                     </a>
+                  Statistisches Bundesamt</em>
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">Börse - DAX</div>
+                    <div class="card-body">
+                        <canvas id="stock_germany"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row my-4" style="margin-top: 6rem !important;">
+              <div class="col-md-4">
+                <div class="card" style="flex-grow: 2">
+                    <div class="card-header">Über dieses Projekt</div>
+                    <div class="card-body">
+                        <p class="card-text" style="max-width: 50rem;">Die Seite
+                        <em>corona-aktuell.net</em> wird regelmäßig
+                        aktualisiert und ist Open Source. Ziel ist es auf einem
+                        Blick eine Situative Einschätzungen des Verlaufs von
+                        Covid-19 zu erlangen. Mitarbeit in der <a
+                        href="https://github.com/ihucos/covid19-dashboard/">Github
+                        Seite</a> dieses Projekts jederzeit willkommen.</p>
+
+                        <p>
+                          <a href="https://travis-ci.com/github/ihucos/covid19-dashboard" target="_blank">
+                              <img src="https://travis-ci.com/ihucos/covid19-dashboard.svg?branch=master"></img>
+                          </a>
+                        </p>
+                        <p>
+                          <em>Letzte Aktualisierung {{ last_updated.strftime('am %d.%m.%Y um %H:%M Uhr') }}.</em>
+                        </p>
+
+                    </div>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                  <div class="card">
+                      <div class="card-header">Seitenaufrufe</div>
+                      <div class="card-body">
+                          <canvas id="website_hits"></canvas>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="card">
+                  <div class="card-header">Weitersagen</div>
+                  {% set text = 'Schnell über Corona bescheidwissen' %}
+                  {% set url = 'https://corona-aktuell.net/' %}
+                  <ul class="list-group">
+                    <li class="list-group-item">
+                       <a class="stretched-link" href="https://twitter.com/intent/tweet?text={{text + ' - ' + url | urlencode}}">
+                           Twitter
+                       </a>
+                    </li>
+                    <li class="list-group-item">
+                       <a class="stretched-link" href="https://www.facebook.com/sharer/sharer.php?u={{ url | urlencode }}&quote={{ text | urlencode }}">
+                           Facebook
+                       </a>
+                    </li>
+                    <li class="list-group-item">
+                    
+                       <a class="stretched-link" href="whatsapp://send?text={{text + ' - ' + url | urlencode}}" data-action="share/whatsapp/share">
+                         Whatsapp <span>(Für Handy)</span>
+                       </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        var data = {{ graphdata }}
+        for (var id in data) {
+            if (data.hasOwnProperty(id)) {
+                var el = document.getElementById(id)
+                if (el){
+                    if (document.body.clientWidth <= 640) {
+                        el.height = 320;
+                    }
+                    new Chart(el, data[id]);
+                }
+            }
+        }
+    </script>
+
+</body>
+
+</html>

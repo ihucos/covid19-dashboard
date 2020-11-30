@@ -1,0 +1,11 @@
+#!/usr/bin/env python3
+import json
+import sys
+sys.path.append('.')
+
+import insights
+
+templ_vars = {key: func() for (key, func) in insights.insights.items()}
+json_str = json.dumps(templ_vars, indent=2)
+with open("build/graphdata.jsonnet", "w") as file:
+    file.write(json_str)

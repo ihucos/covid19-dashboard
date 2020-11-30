@@ -1,0 +1,26 @@
+#!/usr/bin/env python3
+import pandas as pd
+from datetime import date, timedelta
+import datetime
+
+
+yesterday = date.today() - timedelta(days=1)
+yesterday_str = yesterday.strftime("%m-%d-%Y")
+url = f"https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/{yesterday_str}.csv"
+df = pd.read_csv(url)
+df = (
+    df.groupby("Country_Region")[["Confirmed", "Deaths", "Recovered", "Active"]]
+    .sum()
+    .reset_index()
+    .rename(
+        {
+            "Country_Region": "country",
+            "Confirmed": "infections",
+            "Deaths": "deaths",
+            "Recovered": "recovered",
+            "Active": "active",
+        },
+        axis=1,
+    )
+).set_index("country")
+df.to_csv("build/hopkins.csv")

@@ -1,0 +1,43 @@
+#!/usr/bin/env python3
+import urllib.request
+import json
+import re
+from pprint import pprint
+
+URL = 'https://www.tagesschau.de/allemeldungen/'
+REGEX = '<a href="(/[^/]*/liveblog-.*?(?:montag|dienstag|mittwoch|donnerstag|freitag|samstag|sonntag|corona).*?)".*?>(.*?)</a>'
+DETAIL_PAGE_LIST_REGEX = '<div class="checklist small"><ul>(.*?)</ul></div>'
+
+def get_bullet_points(url):
+    this_day = []
+    with urllib.request.urlopen(url) as response:
+        html = response.read().decode()
+    try:
+        match, = re.findall(DETAIL_PAGE_LIST_REGEX, html)
+    except ValueError:
+        pass
+    else:
+        for headline in re.findall("<li>(.*?)</li>", match):
+            yield headline
+
+with urllib.request.urlopen(URL) as response:
+    html = response.read().decode()
+matches = re.findall(REGEX, html)
+
+entries = []
+for url_part, link_text in matches:
+    link_text = link_text.split(": ")[-1].strip(" +")
+    link = "https://www.tagesschau.de{}".format(url_part)
+    text = link_text
+    points = list(get_bullet_points(link))
+    if points:
+        entries.append({'link': link, 'summary': text, 'points': points})
+
+#pprint(entries)
+assert len(
+    entries
+) == 7, "did not found one entry for the last 7 days, found {}".format(
+    len(entries))
+
+with open("build/tagesschau.json", "w") as f:
+    f.write(json.dumps(entries, indent=2))

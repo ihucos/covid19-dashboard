@@ -1,0 +1,29 @@
+#!/usr/bin/env python3
+import pandas as pd
+from datetime import date, timedelta
+import datetime
+
+df = pd.read_csv(
+    f"https://github.com/ihucos/rki-covid19-data/releases/download/{date.today()}/data.csv"
+)
+df = df.rename(
+    columns={
+        "Meldedatum": "date",
+        "Bundesland": "state",
+        "Landkreis": "district",
+        "Altersgruppe": "age_group",
+        "Geschlecht": "gender",
+        "AnzahlFall": "infections",
+        "AnzahlTodesfall": "deaths",
+    }
+)
+df["gender"] = df["gender"].map({"W": "F", "M": "M"})
+df["date"] = pd.to_datetime(df["date"], unit="ms")
+df = df[
+    ["date", "state", "district", "age_group", "gender", "infections", "deaths",]
+]
+df = df.set_index("date", drop=True)
+
+df = df[df["infections"] > 0]
+
+df.to_csv("build/rki.csv")

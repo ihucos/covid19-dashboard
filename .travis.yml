@@ -1,0 +1,14 @@
+language: generic
+dist: bionic
+install:
+- sudo snap install jsonnet
+- sudo apt-get install python3-pip python3-setuptools html-xml-utils 
+- pip3 install -r requirements.txt
+script:
+- make clean
+- make
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  fqdn: corona-aktuell.net

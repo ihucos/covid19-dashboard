@@ -1,0 +1,4 @@
+#!/bin/bash
+URL='https://www.destatis.de/DE/Themen/Wirtschaft/Konjunkturindikatoren/Basisdaten/vpi001j.html?view=main[Print]'
+QUERY="table tbody tr:first-child td:first-of-type, table tbody tr:first-child th abbr"
+hxnormalize -l 240 -x <(curl --fail --location "$URL") | hxselect -s '\n' -c "$QUERY" > build/destatis_consumer.txt
